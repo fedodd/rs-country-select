@@ -11,7 +11,12 @@
   },
   "suffix": ".bs.js",
   "reason": { "react-jsx": 3 },
-  "bs-dependencies": ["@rescript/react"],
+  "bs-dependencies": [
+    "@rescript/react",
+    "bs-fetch",
+    "decco",
+    "@glennsl/bs-json"
+  ],
   "warnings": {
     "error": "+101"
   }
