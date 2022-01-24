@@ -14,8 +14,7 @@
   "bs-dependencies": [
     "@rescript/react",
     "bs-fetch",
-    "decco",
-    "@glennsl/bs-json"
+    "@ryyppy/rescript-promise"
   ],
   "warnings": {
     "error": "+101"

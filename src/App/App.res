@@ -1,43 +1,31 @@
 @react.component
 
- 
-// @scope("JSON") @val
-
 let make = () => {
-  let greetings = React.string("Hello World!!!")
+  let greetings = React.string("Hello World!!!123")
 
-  let (countrySelects: array<Types.countryItem>, setCountrySelects) = React.useState(_ => [])
+  let (countrySelects: array<Api.countryItem>, setCountrySelects) = React.useState(_ => [])
   let (state: string, setState) = React.useState(_ => "")
-  
 
   React.useEffect0(() => {
-    
-    let apiUrl = " https://gist.githubusercontent.com/rusty-key/659db3f4566df459bd59c8a53dc9f71f/raw/4127f9550ef063121c564025f6d27dceeb279623/counties.json"
 
-    
-
-    let _ =
-      Fetch.fetch(apiUrl)
-      ->Js.Promise.then_(Fetch.Response.json, _)
-      ->Js.Promise.then_(json => {
-        let arr = Js.Json.decodeArray(json);
-        switch arr {
-        | None => setState(_prev => "error")
-        | _arr => setState(_prev => "sucess")
+    let _ = {
+      open Promise
+      Api.Country.getCountries()
+      ->Promise.then(result => {
+        switch result {
+        | Ok(countries) =>
+          setCountrySelects(_prev => countries)
+        | Error(msg) => Js.log("Could not query countries: " ++ msg)
+        }->resolve
+      })
+      ->catch(e => {
+        switch e {
+        | Api.FailedRequest(msg) => Js.log("Operation failed! " ++ msg)
+        | _ => Js.log("Unknown error")
         }
-
-        
-        // let parsedArr = Js.Json.decodeArray(json)
-        // setCountrySelects(_prev => arr)
-        
-        Js.log(arr)
-        Js.Promise.resolve()
-      }, _)
-        // ->Js.Promise.catch(_ => {
-        // Js.Promise.resolve()}, _)
-        
-
-
+        resolve()
+      })
+    }
     None 
   })
 
@@ -45,6 +33,6 @@ let make = () => {
   <div>
     <p>greetings</p>
     <p>{React.string(state)}</p>
-    // <ul>Js.Array2.map(state, elem => React.string(elem.label))</ul>
+    // <ul>{Js.Array2.map(countrySelects, elem => React.string(elem.label))}</ul>
   </div>
 }
