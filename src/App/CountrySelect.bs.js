@@ -10,8 +10,8 @@ var ReactSelect = require("react-select").default;
 var ReactSelect$1 = {};
 
 function CountrySelect(Props) {
-  var country = Props.country;
   var className = Props.className;
+  var onChange = Props.onChange;
   var match = React.useState(function () {
         return [];
       });
@@ -54,8 +54,15 @@ function CountrySelect(Props) {
   return React.createElement("div", {
               className: className
             }, options.length > 0 ? React.createElement(ReactSelect, {
-                    value: country,
-                    options: options
+                    defaultValue: {
+                      value: "us",
+                      label: "Unated States"
+                    },
+                    options: options,
+                    onChange: (function (country) {
+                        console.log(country);
+                        return Curry._1(onChange, country.value);
+                      })
                   }) : match$1[0]);
 }
 

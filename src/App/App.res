@@ -6,7 +6,7 @@ let make = () => {
     let (country: string, setCountry) = React.useState(_ => "us")
 
   <div className="app">
-    <CountrySelect className="country-select" country /> 
+    <CountrySelect className="country-select" country onChange={value => setCountry(_ => value)}/> 
     // <ul>{React.array(items)}</ul>
   </div>
 }

@@ -2,18 +2,19 @@ module ReactSelect = {
   
   @module("react-select") @react.component
   external make:(
-    ~className: string=?,
-    ~value: string,
+    ~value: string=?,
+    ~defaultValue: Api.countryItem,
     ~options: array<Api.countryItem>,
-    // ~onChange: (event?: React.ChangeEvent<HTMLInputElement>, newValue?: string)
+    ~onChange: (Api.countryItem) => unit
     ) => React.element = "default"
 }
 
 
 @react.component
-let make = (~country: string, ~className: string) => {  
+let make = (~country: string, ~className: string, ~onChange) => {  
 
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
+  // let (currentCountry, setCurrentCountry) = React.useState(_=> "")
   let (error, setError) = React.useState(_=> "")
 
   React.useEffect0(() => {
@@ -39,14 +40,20 @@ let make = (~country: string, ~className: string) => {
     None 
   })
 
+  // let onChangeHandler = (select, newCountry: Api.countryItem) => onChange(newCountry.value)
+
   <div className>
       {switch Js.Array2.length(options) > 0  {
       | true => <ReactSelect
-      value={country}
-      // onChange={this.handleChange}
-      options
-    />
-    | false => React.string(error)
+          // value={country}
+          defaultValue={value: "us", label: "Unated States"}
+          onChange={(country: Api.countryItem) => {
+            Js.log(country)
+            onChange(country.value)
+          }}
+          options
+        />
+      | false => React.string(error)
     }}
   </div>
 }
