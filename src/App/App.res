@@ -1,10 +1,8 @@
 @react.component
 
 let make = () => {
-  let greetings = React.string("Hello World!!!123")
-
   let (countrySelects: array<Api.countryItem>, setCountrySelects) = React.useState(_ => [])
-  let (state: string, setState) = React.useState(_ => "")
+  let (error, setError) = React.useState(_=> "")
 
   React.useEffect0(() => {
 
@@ -15,13 +13,13 @@ let make = () => {
         switch result {
         | Ok(countries) =>
           setCountrySelects(_prev => countries)
-        | Error(msg) => Js.log("Could not query countries: " ++ msg)
+        | Error(msg) =>setError(_prev => "Could not query countries: " ++ msg)
         }->resolve
       })
       ->catch(e => {
         switch e {
-        | Api.FailedRequest(msg) => Js.log("Operation failed! " ++ msg)
-        | _ => Js.log("Unknown error")
+        | Api.FailedRequest(msg) => setError(_prev => "Operation failed! " ++ msg)
+        | _ => setError(_prev => "Unknown error")
         }
         resolve()
       })
@@ -29,10 +27,13 @@ let make = () => {
     None 
   })
 
+  // let items = {Js.Array2.map(countrySelects, elem => <li>{React.string(elem.value)} {React.string(elem.label)}</li>)}
 
   <div>
-    <p>greetings</p>
-    <p>{React.string(state)}</p>
-    // <ul>{Js.Array2.map(countrySelects, elem => React.string(elem.label))}</ul>
+    {switch Js.Array2.length(countrySelects) > 0  {
+    | true => <CountrySelect value={countrySelects[0]} options={countrySelects}/> 
+    | false => React.string(error)
+    }}
+    // <ul>{React.array(items)}</ul>
   </div>
 }

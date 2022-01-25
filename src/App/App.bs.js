@@ -5,15 +5,19 @@ var Api = require("./Api.bs.js");
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
 var $$Promise = require("@ryyppy/rescript-promise/src/Promise.bs.js");
+var Caml_array = require("rescript/lib/js/caml_array.js");
+var CountrySelect = require("./CountrySelect.bs.js");
 
 function App(Props) {
   var match = React.useState(function () {
         return [];
       });
   var setCountrySelects = match[1];
+  var countrySelects = match[0];
   var match$1 = React.useState(function () {
         return "";
       });
+  var setError = match$1[1];
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -23,21 +27,31 @@ function App(Props) {
                               return countries;
                             }));
                     } else {
-                      console.log("Could not query countries: " + result._0);
-                      tmp = undefined;
+                      var msg = result._0;
+                      tmp = Curry._1(setError, (function (_prev) {
+                              return "Could not query countries: " + msg;
+                            }));
                     }
                     return Promise.resolve(tmp);
                   }), (function (e) {
                   if (e.RE_EXN_ID === Api.FailedRequest) {
-                    console.log("Operation failed! " + e._1);
+                    var msg = e._1;
+                    Curry._1(setError, (function (_prev) {
+                            return "Operation failed! " + msg;
+                          }));
                   } else {
-                    console.log("Unknown error");
+                    Curry._1(setError, (function (_prev) {
+                            return "Unknown error";
+                          }));
                   }
                   return Promise.resolve(undefined);
                 }));
           
         }), []);
-  return React.createElement("div", undefined, React.createElement("p", undefined, "Hello World!!!123"), React.createElement("p", undefined, match$1[0]));
+  return React.createElement("div", undefined, countrySelects.length > 0 ? React.createElement(CountrySelect.make, {
+                    value: Caml_array.get(countrySelects, 0),
+                    options: countrySelects
+                  }) : match$1[0]);
 }
 
 var make = App;
