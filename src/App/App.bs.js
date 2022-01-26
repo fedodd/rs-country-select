@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
-import * as CountrySelect from "./CountrySelect.bs.js";
+import * as CountrySelect from "./CountrySelect/CountrySelect.bs.js";
 
 import 'flag-icons/css/flag-icons.min.css'
 ;

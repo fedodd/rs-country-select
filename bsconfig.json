@@ -6,7 +6,7 @@
     "subdirs": true
   },
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6",
     "in-source": true
   },
   "suffix": ".bs.js",
@@ -18,5 +18,15 @@
   ],
   "warnings": {
     "error": "+101"
+  },
+  "gentypeconfig": {
+    "language": "untyped",
+    "shims": {},
+    "generatedFileExtension": ".gen.jsx",
+    "module": "es6",
+    "debug": {
+      "all": false,
+      "basic": false
+    }
   }
 }

@@ -10,16 +10,6 @@ module ReactSelect = {
     ) => React.element = "default"
 }
 
-module SelectLabel = {
-  @react.component
-  let make = (~option: Api.countryItem) => {
-    <div>
-      <span className={"fi fi-" ++ option.value}></span> {React.string(option.label)}
-    </div>
-  }
-}
-
-
 @react.component
 let make = (~country: string, ~className: string, ~onChange) => {  
 
@@ -72,7 +62,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
           defaultValue={currentCountry}
           onChange={onChangeHandler}
           options
-          getOptionLabel={(option: Api.countryItem) => <SelectLabel option/>}
+          getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
         />
       | false => React.string(error)
     }}
