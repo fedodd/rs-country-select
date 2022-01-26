@@ -5,8 +5,18 @@ module ReactSelect = {
     ~value: string=?,
     ~defaultValue: Api.countryItem,
     ~options: array<Api.countryItem>,
+    ~getOptionLabel: Api.countryItem => React.element,
     ~onChange: (Api.countryItem) => unit
     ) => React.element = "default"
+}
+
+module SelectLabel = {
+  @react.component
+  let make = (~option: Api.countryItem) => {
+    <div>
+      <span className={"fi fi-" ++ option.value}></span> {React.string(option.label)}
+    </div>
+  }
 }
 
 
@@ -14,7 +24,8 @@ module ReactSelect = {
 let make = (~country: string, ~className: string, ~onChange) => {  
 
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
-  // let (currentCountry, setCurrentCountry) = React.useState(_=> "")
+  let (currentCountry, setCurrentCountry) = React.useState(_=> ({value: "us", label: "Unated States"}: Api.countryItem)
+  )
   let (error, setError) = React.useState(_=> "")
 
   React.useEffect0(() => {
@@ -40,18 +51,28 @@ let make = (~country: string, ~className: string, ~onChange) => {
     None 
   })
 
-  // let onChangeHandler = (select, newCountry: Api.countryItem) => onChange(newCountry.value)
+  React.useEffect1(() => {
+
+    switch Js.Array2.find(options, option => option.value === country) {
+    | Some(option) => setCurrentCountry(_ => option)
+    | None => ()
+    }
+    None
+  }, [options])
+
+  let onChangeHandler = (country: Api.countryItem) => {
+    setCurrentCountry(_ => country)
+    onChange(country.value)
+  }
 
   <div className>
       {switch Js.Array2.length(options) > 0  {
       | true => <ReactSelect
           // value={country}
-          defaultValue={value: "us", label: "Unated States"}
-          onChange={(country: Api.countryItem) => {
-            Js.log(country)
-            onChange(country.value)
-          }}
+          defaultValue={currentCountry}
+          onChange={onChangeHandler}
           options
+          getOptionLabel={(option: Api.countryItem) => <SelectLabel option/>}
         />
       | false => React.string(error)
     }}

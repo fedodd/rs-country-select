@@ -8,7 +8,19 @@ import ReactSelect from "react-select";
 
 var ReactSelect$1 = {};
 
+function CountrySelect$SelectLabel(Props) {
+  var option = Props.option;
+  return React.createElement("div", undefined, React.createElement("span", {
+                  className: "fi fi-" + option.value
+                }), option.label);
+}
+
+var SelectLabel = {
+  make: CountrySelect$SelectLabel
+};
+
 function CountrySelect(Props) {
+  var country = Props.country;
   var className = Props.className;
   var onChange = Props.onChange;
   var match = React.useState(function () {
@@ -17,9 +29,16 @@ function CountrySelect(Props) {
   var setOptions = match[1];
   var options = match[0];
   var match$1 = React.useState(function () {
+        return {
+                value: "us",
+                label: "Unated States"
+              };
+      });
+  var setCurrentCountry = match$1[1];
+  var match$2 = React.useState(function () {
         return "";
       });
-  var setError = match$1[1];
+  var setError = match$2[1];
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -50,25 +69,42 @@ function CountrySelect(Props) {
                 }));
           
         }), []);
+  React.useEffect((function () {
+          var option = options.find(function (option) {
+                return option.value === country;
+              });
+          if (option !== undefined) {
+            Curry._1(setCurrentCountry, (function (param) {
+                    return option;
+                  }));
+          }
+          
+        }), [options]);
+  var onChangeHandler = function (country) {
+    Curry._1(setCurrentCountry, (function (param) {
+            return country;
+          }));
+    return Curry._1(onChange, country.value);
+  };
   return React.createElement("div", {
               className: className
             }, options.length > 0 ? React.createElement(ReactSelect, {
-                    defaultValue: {
-                      value: "us",
-                      label: "Unated States"
-                    },
+                    defaultValue: match$1[0],
                     options: options,
-                    onChange: (function (country) {
-                        console.log(country);
-                        return Curry._1(onChange, country.value);
-                      })
-                  }) : match$1[0]);
+                    getOptionLabel: (function (option) {
+                        return React.createElement(CountrySelect$SelectLabel, {
+                                    option: option
+                                  });
+                      }),
+                    onChange: onChangeHandler
+                  }) : match$2[0]);
 }
 
 var make = CountrySelect;
 
 export {
   ReactSelect$1 as ReactSelect,
+  SelectLabel ,
   make ,
   
 }
