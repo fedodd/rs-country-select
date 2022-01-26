@@ -1,3 +1,5 @@
+%%raw("import 'flag-icons/css/flag-icons.min.css'")
+
 module ReactSelect = {
   
   @module("react-select") @react.component
@@ -6,16 +8,45 @@ module ReactSelect = {
     ~defaultValue: Api.countryItem,
     ~options: array<Api.countryItem>,
     ~getOptionLabel: Api.countryItem => React.element,
-    ~onChange: (Api.countryItem) => unit
+    ~onChange: (Api.countryItem) => unit,
+    // ~backspaceRemovesValue={false}
+    // ~components={{ DropdownIndicator, IndicatorSeparator: null }}
+    // ~controlShouldRenderValue={false}
+    // ~hideSelectedOptions={false}
+    // ~isClearable={false}
+    // ~menuIsOpen
+    ~placeholder: string,
+    // ~styles={selectStyles}
+    // ~tabSelectsValue={false}
     ) => React.element = "default"
+  // external colors =>  = "colors"
+  // external StylesConfig: = "StylesConfig"
+}
+
+// const { colors } = defaultTheme;
+
+module Styles = {
+  open Emotion
+  // let container = css({
+  //   "color": "#000",
+  //   "backgroundColor": "red"
+  // })
+  // your other declarations
+  let control =  css({
+    // ...provided,
+    "minWidth": "230",
+    "margin": "8",
+  })
+  let menu = ({ "boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.1)" })
 }
 
 @react.component
 let make = (~country: string, ~className: string, ~onChange) => {  
 
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
-  let (currentCountry, setCurrentCountry) = React.useState(_=> ({value: "us", label: "Unated States"}: Api.countryItem)
+  let (currentCountry, setCurrentCountry) = React.useState(_=> ({value: "sg", label: "Singapore"}: Api.countryItem)
   )
+  let (isOpen, setIsOpen) = React.useState(_=> false)
   let (error, setError) = React.useState(_=> "")
 
   React.useEffect0(() => {
@@ -53,18 +84,26 @@ let make = (~country: string, ~className: string, ~onChange) => {
   let onChangeHandler = (country: Api.countryItem) => {
     setCurrentCountry(_ => country)
     onChange(country.value)
+    setIsOpen(_=> !isOpen)
   }
+
+  let selectWrapper = 
+      <DropDown isOpen={isOpen} onClose={(event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)}
+        target={<div onClick={(event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)}>{React.string(currentCountry.label)}</div>}>
+          <ReactSelect
+            // value={country}
+            defaultValue={currentCountry}
+            onChange={onChangeHandler}
+            options
+            getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
+            placeholder="Search..."
+          />
+      </DropDown>
 
   <div className>
       {switch Js.Array2.length(options) > 0  {
-      | true => <ReactSelect
-          // value={country}
-          defaultValue={currentCountry}
-          onChange={onChangeHandler}
-          options
-          getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
-        />
-      | false => React.string(error)
+      | true => selectWrapper
+      | false => React.null
     }}
   </div>
 }

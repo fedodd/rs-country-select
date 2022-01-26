@@ -2,13 +2,17 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
+import * as Css from "@emotion/css";
 import * as CountrySelect from "./CountrySelect/CountrySelect.bs.js";
-
-import 'flag-icons/css/flag-icons.min.css'
-;
 
 import './App.css'
 ;
+
+var container = Css.css({
+      color: "#000",
+      backgroundColor: "red",
+      maxWidth: 240
+    });
 
 function App(Props) {
   var match = React.useState(function () {
@@ -16,10 +20,8 @@ function App(Props) {
       });
   var setCountry = match[1];
   return React.createElement("div", {
-              className: "app"
-            }, React.createElement("p", undefined, React.createElement("span", {
-                      className: "fi fi-gr"
-                    }), "Greetings!"), React.createElement(CountrySelect.make, {
+              className: container
+            }, React.createElement(CountrySelect.make, {
                   country: match[0],
                   className: "country-select",
                   onChange: (function (value) {
@@ -33,6 +35,7 @@ function App(Props) {
 var make = App;
 
 export {
+  container ,
   make ,
   
 }

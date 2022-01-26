@@ -4,10 +4,29 @@ import * as Api from "../Api/Api.bs.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js";
+import * as DropDown from "../DropDown/DropDown.bs.js";
 import * as OptionLabel from "../OptionLabel/OptionLabel.bs.js";
+import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
 
+import 'flag-icons/css/flag-icons.min.css'
+;
+
 var ReactSelect$1 = {};
+
+var control = Css.css({
+      minWidth: "230",
+      margin: "8"
+    });
+
+var menu = {
+  boxShadow: "inset 0 1px 0 rgba(0, 0, 0, 0.1)"
+};
+
+var Styles = {
+  control: control,
+  menu: menu
+};
 
 function CountrySelect(Props) {
   var country = Props.country;
@@ -20,15 +39,21 @@ function CountrySelect(Props) {
   var options = match[0];
   var match$1 = React.useState(function () {
         return {
-                value: "us",
-                label: "Unated States"
+                value: "sg",
+                label: "Singapore"
               };
       });
   var setCurrentCountry = match$1[1];
+  var currentCountry = match$1[0];
   var match$2 = React.useState(function () {
+        return false;
+      });
+  var setIsOpen = match$2[1];
+  var isOpen = match$2[0];
+  var match$3 = React.useState(function () {
         return "";
       });
-  var setError = match$2[1];
+  var setError = match$3[1];
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -74,27 +99,48 @@ function CountrySelect(Props) {
     Curry._1(setCurrentCountry, (function (param) {
             return country;
           }));
-    return Curry._1(onChange, country.value);
+    Curry._1(onChange, country.value);
+    return Curry._1(setIsOpen, (function (param) {
+                  return !isOpen;
+                }));
   };
+  var selectWrapper = React.createElement(DropDown.make, {
+        children: React.createElement(ReactSelect, {
+              defaultValue: currentCountry,
+              options: options,
+              getOptionLabel: (function (option) {
+                  return React.createElement(OptionLabel.make, {
+                              option: option
+                            });
+                }),
+              onChange: onChangeHandler,
+              placeholder: "Search..."
+            }),
+        isOpen: isOpen,
+        target: React.createElement("div", {
+              onClick: (function ($$event) {
+                  return Curry._1(setIsOpen, (function (param) {
+                                return !isOpen;
+                              }));
+                })
+            }, currentCountry.label),
+        onClose: (function ($$event) {
+            return Curry._1(setIsOpen, (function (param) {
+                          return !isOpen;
+                        }));
+          })
+      });
   return React.createElement("div", {
               className: className
-            }, options.length > 0 ? React.createElement(ReactSelect, {
-                    defaultValue: match$1[0],
-                    options: options,
-                    getOptionLabel: (function (option) {
-                        return React.createElement(OptionLabel.make, {
-                                    option: option
-                                  });
-                      }),
-                    onChange: onChangeHandler
-                  }) : match$2[0]);
+            }, options.length > 0 ? selectWrapper : null);
 }
 
 var make = CountrySelect;
 
 export {
   ReactSelect$1 as ReactSelect,
+  Styles ,
   make ,
   
 }
-/* react Not a pure module */
+/*  Not a pure module */
