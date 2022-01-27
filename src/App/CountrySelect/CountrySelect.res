@@ -49,6 +49,8 @@ let make = (~country: string, ~className: string, ~onChange) => {
   let (isOpen, setIsOpen) = React.useState(_=> false)
   let (error, setError) = React.useState(_=> "")
 
+  let openToggleHandler = (event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)
+
   React.useEffect0(() => {
 
     let _ = {
@@ -88,8 +90,8 @@ let make = (~country: string, ~className: string, ~onChange) => {
   }
 
   let selectWrapper = 
-      <DropDown isOpen={isOpen} onClose={(event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)}
-        target={<div onClick={(event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)}>{React.string(currentCountry.label)}</div>}>
+      <DropDown isOpen={isOpen} onClose={openToggleHandler}
+        target={<Button text={currentCountry.label} onClick={openToggleHandler}/>}>
           <ReactSelect
             // value={country}
             defaultValue={currentCountry}

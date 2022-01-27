@@ -3,6 +3,7 @@
 import * as Api from "../Api/Api.bs.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
+import * as Button from "../Button/Button.bs.js";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js";
 import * as DropDown from "../DropDown/DropDown.bs.js";
 import * as OptionLabel from "../OptionLabel/OptionLabel.bs.js";
@@ -54,6 +55,11 @@ function CountrySelect(Props) {
         return "";
       });
   var setError = match$3[1];
+  var openToggleHandler = function ($$event) {
+    return Curry._1(setIsOpen, (function (param) {
+                  return !isOpen;
+                }));
+  };
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -117,18 +123,11 @@ function CountrySelect(Props) {
               placeholder: "Search..."
             }),
         isOpen: isOpen,
-        target: React.createElement("div", {
-              onClick: (function ($$event) {
-                  return Curry._1(setIsOpen, (function (param) {
-                                return !isOpen;
-                              }));
-                })
-            }, currentCountry.label),
-        onClose: (function ($$event) {
-            return Curry._1(setIsOpen, (function (param) {
-                          return !isOpen;
-                        }));
-          })
+        target: React.createElement(Button.make, {
+              text: currentCountry.label,
+              onClick: openToggleHandler
+            }),
+        onClose: openToggleHandler
       });
   return React.createElement("div", {
               className: className
