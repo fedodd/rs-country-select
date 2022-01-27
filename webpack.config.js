@@ -21,6 +21,21 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+          },
+          {
+            loader: 'file-loader',
+          },
+        ],
+        type: 'javascript/auto',
+        issuer: {
+          and: [/\.(ts|tsx|js|jsx)$/],
+        },
+      },
     ],
   },
   devtool: 'inline-source-map',

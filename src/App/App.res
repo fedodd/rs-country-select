@@ -1,11 +1,9 @@
 %%raw("import './App.css'")
 let container = Emotion.css({
-  "fontFamily": "Arial",
+  "fontFamily": "Arial, Helvetica, sans-serif",
   "fontSize": "14px",
   "lineHeight": "18px",
-  "color": "#333333",
-  "maxWidth": 240
-  
+  "color": "#333333",  
 })
 
 @react.component

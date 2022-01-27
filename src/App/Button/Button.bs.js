@@ -2,32 +2,76 @@
 
 import * as React from "react";
 import * as Css from "@emotion/css";
+import * as ArrowSvg from "./assets/arrow.svg";
 
-var buttonStyle = Css.css({
+var make = ArrowSvg.ReactComponent;
+
+var ArrowIcon = {
+  make: make
+};
+
+var button = Css.css({
+      position: "relative",
       display: "flex",
-      alighItems: "center",
+      gap: 5,
+      justifyContent: "space-between",
+      alignItems: "center",
       paddingLeft: 10,
       paddingRight: 10,
       borderRadius: 2,
       border: "1px solid rgba(0, 0, 0, 0.2)",
       backgroundColor: "#ffffff",
-      marginBottom: 2
+      marginBottom: 2,
+      width: 119,
+      height: 26,
+      boxSizing: "border-box",
+      "&:hover": {
+        cursor: "pointer"
+      }
     });
+
+var buttonText = Css.css({
+      display: "flex",
+      background: "inherit",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      "&:hover": {
+        textOverflow: "unset",
+        overflow: "visible",
+        whiteSpace: "break"
+      }
+    });
+
+var buttonIcon = Css.css({
+      flexShrink: 0
+    });
+
+var Style = {
+  button: button,
+  buttonText: buttonText,
+  buttonIcon: buttonIcon
+};
 
 function Button(Props) {
   var text = Props.text;
   var onClick = Props.onClick;
   return React.createElement("div", {
-              className: buttonStyle,
+              className: button,
               onClick: onClick
-            }, React.createElement("span", undefined, text));
+            }, React.createElement("span", {
+                  className: buttonText
+                }, text), React.createElement(make, {
+                  className: buttonIcon
+                }));
 }
 
-var make = Button;
+var make$1 = Button;
 
 export {
-  buttonStyle ,
-  make ,
+  ArrowIcon ,
+  Style ,
+  make$1 as make,
   
 }
-/* buttonStyle Not a pure module */
+/* make Not a pure module */
