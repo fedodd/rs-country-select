@@ -49,15 +49,15 @@ function CountrySelect(Props) {
   var match$2 = React.useState(function () {
         return false;
       });
-  var setIsOpen = match$2[1];
-  var isOpen = match$2[0];
+  var setMenuIsOpen = match$2[1];
+  var menuIsOpen = match$2[0];
   var match$3 = React.useState(function () {
         return "";
       });
   var setError = match$3[1];
   var openToggleHandler = function ($$event) {
-    return Curry._1(setIsOpen, (function (param) {
-                  return !isOpen;
+    return Curry._1(setMenuIsOpen, (function (param) {
+                  return !menuIsOpen;
                 }));
   };
   React.useEffect((function () {
@@ -106,12 +106,13 @@ function CountrySelect(Props) {
             return country;
           }));
     Curry._1(onChange, country.value);
-    return Curry._1(setIsOpen, (function (param) {
-                  return !isOpen;
+    return Curry._1(setMenuIsOpen, (function (param) {
+                  return !menuIsOpen;
                 }));
   };
   var selectWrapper = React.createElement(DropDown.make, {
         children: React.createElement(ReactSelect, {
+              value: currentCountry,
               defaultValue: currentCountry,
               options: options,
               getOptionLabel: (function (option) {
@@ -120,9 +121,12 @@ function CountrySelect(Props) {
                             });
                 }),
               onChange: onChangeHandler,
+              autoFocus: true,
+              controlShouldRenderValue: false,
+              menuIsOpen: menuIsOpen,
               placeholder: "Search..."
             }),
-        isOpen: isOpen,
+        isOpen: menuIsOpen,
         target: React.createElement(Button.make, {
               text: currentCountry.label,
               onClick: openToggleHandler

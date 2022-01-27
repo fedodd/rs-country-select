@@ -4,17 +4,18 @@ module ReactSelect = {
   
   @module("react-select") @react.component
   external make:(
-    ~value: string=?,
+    ~value: Api.countryItem,
     ~defaultValue: Api.countryItem,
     ~options: array<Api.countryItem>,
     ~getOptionLabel: Api.countryItem => React.element,
     ~onChange: (Api.countryItem) => unit,
+    ~autoFocus: bool,
     // ~backspaceRemovesValue={false}
     // ~components={{ DropdownIndicator, IndicatorSeparator: null }}
-    // ~controlShouldRenderValue={false}
+    ~controlShouldRenderValue: bool,
     // ~hideSelectedOptions={false}
     // ~isClearable={false}
-    // ~menuIsOpen
+    ~menuIsOpen: bool,
     ~placeholder: string,
     // ~styles={selectStyles}
     // ~tabSelectsValue={false}
@@ -46,10 +47,10 @@ let make = (~country: string, ~className: string, ~onChange) => {
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
   let (currentCountry, setCurrentCountry) = React.useState(_=> ({value: "sg", label: "Singapore"}: Api.countryItem)
   )
-  let (isOpen, setIsOpen) = React.useState(_=> false)
+  let (menuIsOpen, setMenuIsOpen) = React.useState(_=> false)
   let (error, setError) = React.useState(_=> "")
 
-  let openToggleHandler = (event: ReactEvent.Mouse.t) => setIsOpen(_ => !isOpen)
+  let openToggleHandler = (event: ReactEvent.Mouse.t) => setMenuIsOpen(_ => !menuIsOpen)
 
   React.useEffect0(() => {
 
@@ -86,19 +87,22 @@ let make = (~country: string, ~className: string, ~onChange) => {
   let onChangeHandler = (country: Api.countryItem) => {
     setCurrentCountry(_ => country)
     onChange(country.value)
-    setIsOpen(_=> !isOpen)
+    setMenuIsOpen(_=> !menuIsOpen)
   }
 
   let selectWrapper = 
-      <DropDown isOpen={isOpen} onClose={openToggleHandler}
+      <DropDown isOpen={menuIsOpen} onClose={openToggleHandler}
         target={<Button text={currentCountry.label} onClick={openToggleHandler}/>}>
           <ReactSelect
-            // value={country}
+            value={currentCountry}
             defaultValue={currentCountry}
             onChange={onChangeHandler}
             options
             getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
             placeholder="Search..."
+            menuIsOpen
+            autoFocus={true}
+            controlShouldRenderValue={false}
           />
       </DropDown>
 
