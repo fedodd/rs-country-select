@@ -5,14 +5,14 @@ import * as React from "react";
 import * as Css from "@emotion/css";
 import * as CountrySelect from "./CountrySelect/CountrySelect.bs.js";
 
-import './App.css'
-;
-
 var container = Css.css({
       fontFamily: "Arial, Helvetica, sans-serif",
       fontSize: "14px",
       lineHeight: "18px",
-      color: "#333333"
+      color: "#333333",
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "220px"
     });
 
 function App(Props) {
@@ -40,4 +40,4 @@ export {
   make ,
   
 }
-/*  Not a pure module */
+/* container Not a pure module */

@@ -30,10 +30,15 @@ var dropDown = Css.css({
     });
 
 var menu = Css.css({
-      borderRadius: 2,
       marginTop: 2,
       position: "absolute",
-      zIndex: 2
+      zIndex: 2,
+      width: 230,
+      height: 199,
+      boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+      borderRadius: 2,
+      border: "1px solid rgba(0, 0, 0, 0.08",
+      backgroundColor: "#ffffff"
     });
 
 var Styles = {

@@ -9,9 +9,16 @@ import * as DropDown from "../DropDown/DropDown.bs.js";
 import * as OptionLabel from "../OptionLabel/OptionLabel.bs.js";
 import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
+import * as Search_iconSvg from "./assets/search_icon.svg";
 
 import 'flag-icons/css/flag-icons.min.css'
 ;
+
+var make = Search_iconSvg.ReactComponent;
+
+var SearchIcon = {
+  make: make
+};
 
 var ReactSelect$1 = {};
 
@@ -24,9 +31,51 @@ var menu = {
   boxShadow: "inset 0 1px 0 rgba(0, 0, 0, 0.1)"
 };
 
+var searchIconWrapper = Css.css({
+      order: "-1"
+    });
+
+var searchIcon = Css.css({
+      color: "grey",
+      height: 13,
+      width: 13
+    });
+
+var dropdownIndicator = Css.css({
+      order: "-1"
+    });
+
 var Styles = {
   control: control,
-  menu: menu
+  menu: menu,
+  searchIconWrapper: searchIconWrapper,
+  searchIcon: searchIcon,
+  dropdownIndicator: dropdownIndicator
+};
+
+var selectStyles = {
+  container: (function (param) {
+      return Css.css({
+                  width: "230px"
+                });
+    }),
+  placeholder: (function (param) {
+      return {
+              color: "red"
+            };
+    })
+};
+
+function CountrySelect$DropdownIndicator(Props) {
+  return React.createElement("div", {
+              className: searchIconWrapper
+            }, React.createElement(make, {
+                  className: searchIcon
+                }));
+}
+
+var DropdownIndicator = {
+  make: CountrySelect$DropdownIndicator
 };
 
 function CountrySelect(Props) {
@@ -110,6 +159,20 @@ function CountrySelect(Props) {
                   return !menuIsOpen;
                 }));
   };
+  var components_DropdownIndicator = function (param) {
+    return React.createElement("div", {
+                className: dropdownIndicator
+              }, React.createElement(make, {
+                    className: searchIcon
+                  }));
+  };
+  var components_IndicatorSeparator = function (param) {
+    return null;
+  };
+  var components = {
+    DropdownIndicator: components_DropdownIndicator,
+    IndicatorSeparator: components_IndicatorSeparator
+  };
   var selectWrapper = React.createElement(DropDown.make, {
         children: React.createElement(ReactSelect, {
               value: currentCountry,
@@ -124,7 +187,8 @@ function CountrySelect(Props) {
               autoFocus: true,
               controlShouldRenderValue: false,
               menuIsOpen: menuIsOpen,
-              placeholder: "Search..."
+              placeholder: "Search...",
+              components: components
             }),
         isOpen: menuIsOpen,
         target: React.createElement(Button.make, {
@@ -138,12 +202,15 @@ function CountrySelect(Props) {
             }, options.length > 0 ? selectWrapper : null);
 }
 
-var make = CountrySelect;
+var make$1 = CountrySelect;
 
 export {
+  SearchIcon ,
   ReactSelect$1 as ReactSelect,
   Styles ,
-  make ,
+  selectStyles ,
+  DropdownIndicator ,
+  make$1 as make,
   
 }
 /*  Not a pure module */

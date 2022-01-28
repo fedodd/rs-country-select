@@ -1,7 +1,21 @@
 %%raw("import 'flag-icons/css/flag-icons.min.css'")
 
+module SearchIcon = {
+  @module("./assets/search_icon.svg") @react.component
+  external make: (~className: string) => React.element = "ReactComponent"
+}
+
 module ReactSelect = {
-  
+
+  type components = {
+    @as("DropdownIndicator")
+    dropdownIndicator: unit => React.element,
+    @as("IndicatorSeparator")
+    indicatorSeparator: unit => React.element,
+    @as("SelectContainer")
+    // selectContainer: unit => React.element,
+  }
+
   @module("react-select") @react.component
   external make:(
     ~value: Api.countryItem,
@@ -10,6 +24,9 @@ module ReactSelect = {
     ~getOptionLabel: Api.countryItem => React.element,
     ~onChange: (Api.countryItem) => unit,
     ~autoFocus: bool,
+    ~openMenuOnFocus: bool=?,
+    // ~onFocus
+    // ~onKeyDown
     // ~backspaceRemovesValue={false}
     // ~components={{ DropdownIndicator, IndicatorSeparator: null }}
     ~controlShouldRenderValue: bool,
@@ -17,28 +34,50 @@ module ReactSelect = {
     // ~isClearable={false}
     ~menuIsOpen: bool,
     ~placeholder: string,
-    // ~styles={selectStyles}
+    ~components: components=?,
+    // ~styles: 'a=?
     // ~tabSelectsValue={false}
     ) => React.element = "default"
-  // external colors =>  = "colors"
-  // external StylesConfig: = "StylesConfig"
 }
-
-// const { colors } = defaultTheme;
 
 module Styles = {
   open Emotion
-  // let container = css({
-  //   "color": "#000",
-  //   "backgroundColor": "red"
-  // })
-  // your other declarations
   let control =  css({
-    // ...provided,
     "minWidth": "230",
     "margin": "8",
   })
   let menu = ({ "boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.1)" })
+
+  let searchIconWrapper = css({
+        "order": "-1"
+  })
+
+  let searchIcon = css({
+    "color": "grey",
+    "height": 13,
+    "width": 13,
+  })
+
+  let dropdownIndicator = css({
+    "order": "-1"
+  })
+}
+
+let selectStyles = {
+  "container": () => Emotion.css({
+    "width": "230px"
+  }),
+  "placeholder": () => ({
+    "color": "red",
+  })
+}
+
+module DropdownIndicator = {
+  @react.component
+  let make = () => 
+    <div className={Styles.searchIconWrapper}>
+      <SearchIcon className={Styles.searchIcon}/>
+    </div>
 }
 
 @react.component
@@ -90,6 +129,12 @@ let make = (~country: string, ~className: string, ~onChange) => {
     setMenuIsOpen(_=> !menuIsOpen)
   }
 
+
+  let components: ReactSelect.components = {
+    dropdownIndicator: () => <div className={Styles.dropdownIndicator}><SearchIcon className={Styles.searchIcon}/></div>, 
+    indicatorSeparator: () => React.null,
+  }
+
   let selectWrapper = 
       <DropDown isOpen={menuIsOpen} onClose={openToggleHandler}
         target={<Button text={currentCountry.label} onClick={openToggleHandler}/>}>
@@ -103,6 +148,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
             menuIsOpen
             autoFocus={true}
             controlShouldRenderValue={false}
+            components
           />
       </DropDown>
 
