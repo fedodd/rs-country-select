@@ -48,9 +48,6 @@ module Styles = {
   })
   let menu = ({ "boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.1)" })
 
-  let searchIconWrapper = css({
-        "order": "-1"
-  })
 
   let searchIcon = css({
     "color": "grey",
@@ -61,6 +58,7 @@ module Styles = {
   let dropdownIndicator = css({
     "order": "-1"
   })
+
 }
 
 let selectStyles = {
@@ -69,13 +67,22 @@ let selectStyles = {
   }),
   "placeholder": () => ({
     "color": "red",
+  }),
+  "control": () => ({
+    "width": "230px",
+    "height": "35px",
+    "boxShadow": "inset 0px -1px 0px rgba(0, 0, 0, 0.08)",
+    "backgroundColor": "rgba(255, 255, 255, 0.08)",
+  }),
+  "dropdownIndicator": () => ({
+    "order": "-1"
   })
 }
 
 module DropdownIndicator = {
   @react.component
   let make = () => 
-    <div className={Styles.searchIconWrapper}>
+    <div className={Styles.dropdownIndicator}>
       <SearchIcon className={Styles.searchIcon}/>
     </div>
 }
@@ -131,7 +138,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
 
 
   let components: ReactSelect.components = {
-    dropdownIndicator: () => <div className={Styles.dropdownIndicator}><SearchIcon className={Styles.searchIcon}/></div>, 
+    dropdownIndicator: () => <DropdownIndicator />, 
     indicatorSeparator: () => React.null,
   }
 

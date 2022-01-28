@@ -31,10 +31,6 @@ var menu = {
   boxShadow: "inset 0 1px 0 rgba(0, 0, 0, 0.1)"
 };
 
-var searchIconWrapper = Css.css({
-      order: "-1"
-    });
-
 var searchIcon = Css.css({
       color: "grey",
       height: 13,
@@ -48,7 +44,6 @@ var dropdownIndicator = Css.css({
 var Styles = {
   control: control,
   menu: menu,
-  searchIconWrapper: searchIconWrapper,
   searchIcon: searchIcon,
   dropdownIndicator: dropdownIndicator
 };
@@ -63,12 +58,25 @@ var selectStyles = {
       return {
               color: "red"
             };
+    }),
+  control: (function (param) {
+      return {
+              width: "230px",
+              height: "35px",
+              boxShadow: "inset 0px -1px 0px rgba(0, 0, 0, 0.08)",
+              backgroundColor: "rgba(255, 255, 255, 0.08)"
+            };
+    }),
+  dropdownIndicator: (function (param) {
+      return {
+              order: "-1"
+            };
     })
 };
 
 function CountrySelect$DropdownIndicator(Props) {
   return React.createElement("div", {
-              className: searchIconWrapper
+              className: dropdownIndicator
             }, React.createElement(make, {
                   className: searchIcon
                 }));
@@ -160,11 +168,7 @@ function CountrySelect(Props) {
                 }));
   };
   var components_DropdownIndicator = function (param) {
-    return React.createElement("div", {
-                className: dropdownIndicator
-              }, React.createElement(make, {
-                    className: searchIcon
-                  }));
+    return React.createElement(CountrySelect$DropdownIndicator, {});
   };
   var components_IndicatorSeparator = function (param) {
     return null;
