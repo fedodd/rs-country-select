@@ -57,9 +57,9 @@ module DropdownIndicator = {
 let make = (~country: string, ~className: string, ~onChange) => {
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
   let (menuIsOpen, setMenuIsOpen) = React.useState(_ => false)
-  let (error, setError) = React.useState(_ => "")
+  let (_, setError) = React.useState(_ => "")
 
-  let onToggleHandler = (event: ReactEvent.Mouse.t) => setMenuIsOpen(_ => !menuIsOpen)
+  let onToggleHandler = (_event: ReactEvent.Mouse.t) => setMenuIsOpen(_ => !menuIsOpen)
 
   // let defaultCountry
 
@@ -106,10 +106,10 @@ let make = (~country: string, ~className: string, ~onChange) => {
   //     },
   // }
 
-  let filterOption = ReactSelect.createFilter({
-    ignoreAccents: false,
-    stringify: (option: ReactSelect.optionData) => option.data.label,
-  })
+  // let filterOption = ReactSelect.createFilter({
+  //   ignoreAccents: false,
+  //   stringify: (option: ReactSelect.optionData) => option.data.label,
+  // })
 
   let selectWrapper =
     <DropDown
@@ -128,7 +128,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
         onChange={onChangeHandler}
         options
         // getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
-        placeholder="Search..."
+        placeholder="Search"
         menuIsOpen
         autoFocus={true}
         controlShouldRenderValue={false}

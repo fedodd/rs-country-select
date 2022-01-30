@@ -9,7 +9,6 @@ import * as DropDown from "./DropDown.bs.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
-import * as ReactSelect$1 from "react-select";
 import * as Search_iconSvg from "./assets/search_icon.svg";
 
 import 'flag-icons/css/flag-icons.min.css'
@@ -106,7 +105,7 @@ function CountrySelect(Props) {
         return "";
       });
   var setError = match$2[1];
-  var onToggleHandler = function ($$event) {
+  var onToggleHandler = function (_event) {
     return Curry._1(setMenuIsOpen, (function (param) {
                   return !menuIsOpen;
                 }));
@@ -160,12 +159,6 @@ function CountrySelect(Props) {
     DropdownIndicator: components_DropdownIndicator,
     IndicatorSeparator: components_IndicatorSeparator
   };
-  ReactSelect$1.createFilter({
-        ignoreAccents: false,
-        stringify: (function (option) {
-            return option.data.label;
-          })
-      });
   var selectWrapper = React.createElement(DropDown.make, {
         children: React.createElement(ReactSelect, {
               value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
@@ -175,7 +168,7 @@ function CountrySelect(Props) {
               autoFocus: true,
               controlShouldRenderValue: false,
               menuIsOpen: menuIsOpen,
-              placeholder: "Search...",
+              placeholder: "Search",
               components: components,
               classNamePrefix: "--country-select"
             }),
