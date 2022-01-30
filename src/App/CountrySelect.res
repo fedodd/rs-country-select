@@ -25,32 +25,25 @@ module Styles = {
   })
 }
 
-let selectStyles = {
-  "container": () =>
-    Emotion.css({
-      "width": "230px",
-    }),
-  "placeholder": () =>
-    {
-      "color": "red",
-    },
-  "control": () =>
-    {
-      "width": "230px",
-      "height": "35px",
-      "boxShadow": "inset 0px -1px 0px rgba(0, 0, 0, 0.08)",
-      "backgroundColor": "rgba(255, 255, 255, 0.08)",
-    },
-  "dropdownIndicator": () =>
-    {
-      "order": "-1",
-    },
-}
-
-module DropdownIndicator = {
+module SearchIconComponent = {
   @react.component
   let make = () =>
     <div className={Styles.dropdownIndicator}> <SearchIcon className={Styles.searchIcon} /> </div>
+}
+
+// let props: ReactSelect.componentsProps = {
+//   options: array<Api.countryItem>,
+//   children: React.element,
+//   focusedOption: Api.countryItem,
+//   maxHeight: 164,
+//   innerRef: unit => React.element,
+// }
+
+let components: ReactSelect.components = {
+  dropdownIndicator: () => React.null,
+  indicatorSeparator: () => React.null,
+  menuList: props => <CountrySelectMenu menuProps={props} height=164 itemSize=26 />,
+  option: ({data}) => <CountrySelectOption option={data}/>
 }
 
 @react.component
@@ -93,18 +86,6 @@ let make = (~country: string, ~className: string, ~onChange) => {
     }
     None
   })
-
-  let components: ReactSelect.components = {
-    dropdownIndicator: () => <DropdownIndicator />,
-    indicatorSeparator: () => React.null,
-  }
-
-  // let styles: ReactSelect.selectStylesRecord = {
-  //   container: ((), ()) =>
-  //     {
-  //       "width": "400px",
-  //     },
-  // }
 
   // let filterOption = ReactSelect.createFilter({
   //   ignoreAccents: false,

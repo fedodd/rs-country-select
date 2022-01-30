@@ -9,6 +9,8 @@ import * as DropDown from "./DropDown.bs.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
+import * as CountrySelectMenu from "./CountrySelectMenu.bs.js";
+import * as CountrySelectOption from "./CountrySelectOption.bs.js";
 import * as Search_iconSvg from "./assets/search_icon.svg";
 
 import 'flag-icons/css/flag-icons.min.css'
@@ -49,33 +51,7 @@ var Styles = {
   dropdownIndicator: dropdownIndicator
 };
 
-var selectStyles = {
-  container: (function (param) {
-      return Css.css({
-                  width: "230px"
-                });
-    }),
-  placeholder: (function (param) {
-      return {
-              color: "red"
-            };
-    }),
-  control: (function (param) {
-      return {
-              width: "230px",
-              height: "35px",
-              boxShadow: "inset 0px -1px 0px rgba(0, 0, 0, 0.08)",
-              backgroundColor: "rgba(255, 255, 255, 0.08)"
-            };
-    }),
-  dropdownIndicator: (function (param) {
-      return {
-              order: "-1"
-            };
-    })
-};
-
-function CountrySelect$DropdownIndicator(Props) {
+function CountrySelect$SearchIconComponent(Props) {
   return React.createElement("div", {
               className: dropdownIndicator
             }, React.createElement(make, {
@@ -83,8 +59,37 @@ function CountrySelect$DropdownIndicator(Props) {
                 }));
 }
 
-var DropdownIndicator = {
-  make: CountrySelect$DropdownIndicator
+var SearchIconComponent = {
+  make: CountrySelect$SearchIconComponent
+};
+
+function components_DropdownIndicator(param) {
+  return null;
+}
+
+function components_IndicatorSeparator(param) {
+  return null;
+}
+
+function components_MenuList(props) {
+  return React.createElement(CountrySelectMenu.make, {
+              height: 164,
+              itemSize: 26,
+              menuProps: props
+            });
+}
+
+function components_Option(param) {
+  return React.createElement(CountrySelectOption.make, {
+              option: param.data
+            });
+}
+
+var components = {
+  DropdownIndicator: components_DropdownIndicator,
+  IndicatorSeparator: components_IndicatorSeparator,
+  MenuList: components_MenuList,
+  Option: components_Option
 };
 
 function CountrySelect(Props) {
@@ -149,16 +154,6 @@ function CountrySelect(Props) {
                 }));
           
         }), []);
-  var components_DropdownIndicator = function (param) {
-    return React.createElement(CountrySelect$DropdownIndicator, {});
-  };
-  var components_IndicatorSeparator = function (param) {
-    return null;
-  };
-  var components = {
-    DropdownIndicator: components_DropdownIndicator,
-    IndicatorSeparator: components_IndicatorSeparator
-  };
   var selectWrapper = React.createElement(DropDown.make, {
         children: React.createElement(ReactSelect, {
               value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
@@ -189,8 +184,8 @@ var make$1 = CountrySelect;
 export {
   SearchIcon ,
   Styles ,
-  selectStyles ,
-  DropdownIndicator ,
+  SearchIconComponent ,
+  components ,
   make$1 as make,
   
 }

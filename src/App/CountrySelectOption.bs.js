@@ -24,7 +24,7 @@ var Styles = {
   flag: flag
 };
 
-function OptionLabel(Props) {
+function CountrySelectOption(Props) {
   var option$1 = Props.option;
   return React.createElement("div", {
               className: option
@@ -33,7 +33,7 @@ function OptionLabel(Props) {
                 }), React.createElement("span", undefined, option$1.label));
 }
 
-var make = OptionLabel;
+var make = CountrySelectOption;
 
 export {
   Styles ,

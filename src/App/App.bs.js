@@ -3,7 +3,6 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Css from "@emotion/css";
-import * as ReactWindow from "react-window";
 import * as CountrySelect from "./CountrySelect.bs.js";
 
 var container = Css.css({
@@ -16,36 +15,8 @@ var container = Css.css({
       marginTop: "220px"
     });
 
-var list = Css.css({
-      border: "1px solid #d9dddd"
-    });
-
-var listItem = Css.css({
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      "&:nth-child(2n)": {
-        backgroounColor: "lightblue"
-      }
-    });
-
 var Styles = {
-  container: container,
-  list: list,
-  listItem: listItem
-};
-
-function App$Row(Props) {
-  var style = Props.style;
-  var index = Props.index;
-  return React.createElement("div", {
-              className: listItem,
-              style: style
-            }, index);
-}
-
-var Row = {
-  make: App$Row
+  container: container
 };
 
 function App(Props) {
@@ -63,18 +34,6 @@ function App(Props) {
                                     return value;
                                   }));
                     })
-                }), React.createElement(ReactWindow.FixedSizeList, {
-                  height: 300,
-                  width: 300,
-                  itemSize: 60,
-                  itemCount: 5,
-                  children: (function (param) {
-                      return React.createElement(App$Row, {
-                                  style: param.style,
-                                  index: param.index
-                                });
-                    }),
-                  className: list
                 }));
 }
 
@@ -82,7 +41,6 @@ var make = App;
 
 export {
   Styles ,
-  Row ,
   make ,
   
 }
