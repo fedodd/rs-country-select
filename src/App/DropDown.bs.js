@@ -12,6 +12,10 @@ var blanketStyle = Css.css({
       zIndex: 1
     });
 
+var Styles = {
+  blanketStyle: blanketStyle
+};
+
 function DropDown$Blanket(Props) {
   var onClick = Props.onClick;
   return React.createElement("div", {
@@ -21,7 +25,7 @@ function DropDown$Blanket(Props) {
 }
 
 var Blanket = {
-  blanketStyle: blanketStyle,
+  Styles: Styles,
   make: DropDown$Blanket
 };
 
@@ -37,11 +41,11 @@ var menu = Css.css({
       height: 199,
       boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
       borderRadius: 2,
-      border: "1px solid rgba(0, 0, 0, 0.08",
+      border: "1px solid rgba(0, 0, 0, 0.08)",
       backgroundColor: "#ffffff"
     });
 
-var Styles = {
+var Styles$1 = {
   dropDown: dropDown,
   menu: menu
 };
@@ -64,7 +68,7 @@ var make = DropDown;
 
 export {
   Blanket ,
-  Styles ,
+  Styles$1 as Styles,
   make ,
   
 }

@@ -20,6 +20,7 @@
     "bs-fetch": "^0.6.2",
     "flag-icons": "^6.0.3",
     "react-select": "^5.2.2",
+    "react-window": "^1.8.6",
     "rescript": "*"
   },
   "devDependencies": {

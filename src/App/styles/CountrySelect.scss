@@ -1,0 +1,18 @@
+.--country-select__container.--country-select__container {
+  width: 230px;
+}
+
+.--country-select__placeholder.--country-select__placeholder {
+  color: red;
+}
+
+.--country-select__control.--country-select__control {
+  width: 230px;
+  height: 35px;
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.--country-select__indicators.--country-select__indicators {
+  order: -1;
+}

@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Css from "@emotion/css";
-import * as CountrySelect from "./CountrySelect/CountrySelect.bs.js";
+import * as CountrySelect from "./CountrySelect.bs.js";
 
 var container = Css.css({
       fontFamily: "Arial, Helvetica, sans-serif",
@@ -14,6 +14,10 @@ var container = Css.css({
       justifyContent: "center",
       marginTop: "220px"
     });
+
+var Styles = {
+  container: container
+};
 
 function App(Props) {
   var match = React.useState(function () {
@@ -36,7 +40,7 @@ function App(Props) {
 var make = App;
 
 export {
-  container ,
+  Styles ,
   make ,
   
 }

@@ -3,7 +3,7 @@ module ArrowIcon = {
   external make: (~className: string) => React.element = "ReactComponent"
 }
 
-module Style = {
+module Styles = {
   open Emotion
   let button = css({
     "position": "relative",
@@ -20,9 +20,8 @@ module Style = {
     "width": 119,
     "height": 26,
     "boxSizing": "border-box",
-    
     "&:hover": {
-          "cursor": "pointer"
+      "cursor": "pointer",
     },
   })
 
@@ -32,7 +31,6 @@ module Style = {
     "whiteSpace": "nowrap",
     "textOverflow": "ellipsis",
     "overflow": "hidden",
-
     "&:hover": {
       "textOverflow": "unset",
       "overflow": "visible",
@@ -41,13 +39,13 @@ module Style = {
   })
 
   let buttonIcon = css({
-    "flexShrink": 0
+    "flexShrink": 0,
   })
 }
 
 @react.component
-let make = (~text: string, ~onClick) => 
-  <div onClick className={Style.button}>
-    <span className={Style.buttonText}>{React.string(text)}</span>
-    <ArrowIcon className={Style.buttonIcon}/>
+let make = (~text: string, ~onClick) =>
+  <div onClick className={Styles.button}>
+    <span className={Styles.buttonText}> {React.string(text)} </span>
+    <ArrowIcon className={Styles.buttonIcon} />
   </div>

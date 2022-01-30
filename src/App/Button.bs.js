@@ -47,7 +47,7 @@ var buttonIcon = Css.css({
       flexShrink: 0
     });
 
-var Style = {
+var Styles = {
   button: button,
   buttonText: buttonText,
   buttonIcon: buttonIcon
@@ -70,7 +70,7 @@ var make$1 = Button;
 
 export {
   ArrowIcon ,
-  Style ,
+  Styles ,
   make$1 as make,
   
 }
