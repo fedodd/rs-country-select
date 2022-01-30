@@ -1,9 +1,31 @@
+type menuListProps = {
+  options: array<Api.countryItem>,
+  children: React.element,
+  focusedOption: Api.countryItem,
+  maxHeight: int,
+  innerRef: unit => React.element,
+}
+
+type optionProps = {
+  data: Api.countryItem
+}
+
 type components = {
   @as("DropdownIndicator")
   dropdownIndicator: unit => React.element,
   @as("IndicatorSeparator")
   indicatorSeparator: unit => React.element,
+  @as("MenuList")
+  menuList: menuListProps => React.element,
+  @as("Option")
+  option: optionProps => React.element
 }
+
+// innerProps:
+// DetailedHTMLProps Intersection<
+// ClassAttributes{...},
+// HTMLAttributes{...}
+// >
 
 // type customStyles = {"width": string}
 // type selectStylesRecord = {container: (unit, unit) => customStyles}
