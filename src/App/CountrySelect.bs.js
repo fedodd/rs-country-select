@@ -40,21 +40,14 @@ var searchIcon = Css.css({
       width: 13
     });
 
-var dropdownIndicator = Css.css({
-      order: "-1"
-    });
-
 var Styles = {
   control: control,
   menu: menu,
-  searchIcon: searchIcon,
-  dropdownIndicator: dropdownIndicator
+  searchIcon: searchIcon
 };
 
 function CountrySelect$SearchIconComponent(Props) {
-  return React.createElement("div", {
-              className: dropdownIndicator
-            }, React.createElement(make, {
+  return React.createElement("div", undefined, React.createElement(make, {
                   className: searchIcon
                 }));
 }
@@ -64,7 +57,7 @@ var SearchIconComponent = {
 };
 
 function components_DropdownIndicator(param) {
-  return null;
+  return React.createElement(CountrySelect$SearchIconComponent, {});
 }
 
 function components_IndicatorSeparator(param) {

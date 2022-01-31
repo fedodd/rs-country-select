@@ -20,15 +20,14 @@ module Styles = {
     "width": 13,
   })
 
-  let dropdownIndicator = css({
-    "order": "-1",
-  })
+  // let dropdownIndicator = css({
+  //   "order": "-1",
+  // })
 }
 
 module SearchIconComponent = {
   @react.component
-  let make = () =>
-    <div className={Styles.dropdownIndicator}> <SearchIcon className={Styles.searchIcon} /> </div>
+  let make = () => <div> <SearchIcon className={Styles.searchIcon} /> </div>
 }
 
 // let props: ReactSelect.componentsProps = {
@@ -40,10 +39,10 @@ module SearchIconComponent = {
 // }
 
 let components: ReactSelect.components = {
-  dropdownIndicator: () => React.null,
+  dropdownIndicator: () => <SearchIconComponent />,
   indicatorSeparator: () => React.null,
   menuList: props => <CountrySelectMenu menuProps={props} height=164 itemSize=26 />,
-  option: ({data}) => <CountrySelectOption option={data}/>
+  option: ({data}) => <CountrySelectOption option={data} />,
 }
 
 @react.component

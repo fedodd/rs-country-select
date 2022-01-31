@@ -6,9 +6,7 @@ type menuListProps = {
   innerRef: unit => React.element,
 }
 
-type optionProps = {
-  data: Api.countryItem
-}
+type optionProps = {data: Api.countryItem}
 
 type components = {
   @as("DropdownIndicator")
@@ -18,7 +16,7 @@ type components = {
   @as("MenuList")
   menuList: menuListProps => React.element,
   @as("Option")
-  option: optionProps => React.element
+  option: optionProps => React.element,
 }
 
 // innerProps:

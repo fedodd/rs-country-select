@@ -15,14 +15,17 @@ module Styles = {
 module Row = {
   @react.component
   let make = (~style: ReactDOM.style, ~index: int, ~children: React.element) =>
-    <div style={style} className={Styles.listItem}>
-      children
-    </div>
+    <div style={style} key={Js.Int.toString(index)} className={Styles.listItem}> children </div>
 }
 
 @react.component
-let make = (~height: int, ~itemSize: int, ~menuProps: ReactSelect.menuListProps) =>
+let make = (~height: int, ~itemSize: int, ~menuProps: ReactSelect.menuListProps) => {
   <ReactWindow
-    height itemSize itemCount={Js.Array2.length(menuProps.options)} className={Styles.list}>
-    {({style, index}) => <Row style index >{React.Children.toArray(menuProps.children)[index]}</Row>}
+    height
+    itemSize
+    itemCount={React.Children.toArray(menuProps.children)->Js.Array2.length}
+    className={Styles.list}>
+    {({style, index}) =>
+      <Row style index> {React.Children.toArray(menuProps.children)[index]} </Row>}
   </ReactWindow>
+}

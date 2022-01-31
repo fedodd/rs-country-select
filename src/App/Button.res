@@ -16,7 +16,6 @@ module Styles = {
     "borderRadius": 2,
     "border": "1px solid rgba(0, 0, 0, 0.2)",
     "backgroundColor": "#ffffff",
-    "marginBottom": 2,
     "width": 119,
     "height": 26,
     "boxSizing": "border-box",
