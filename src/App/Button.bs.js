@@ -55,7 +55,7 @@ var Styles = {
 function Button(Props) {
   var text = Props.text;
   var onClick = Props.onClick;
-  return React.createElement("div", {
+  return React.createElement("button", {
               className: button,
               onClick: onClick
             }, React.createElement("span", {

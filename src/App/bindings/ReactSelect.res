@@ -6,7 +6,17 @@ type menuListProps = {
   innerRef: unit => React.element,
 }
 
-type optionProps = {data: Api.countryItem}
+type optionInnerProps = {
+  id: string,
+  onClick: ReactEvent.Mouse.t => unit,
+  onMouseOver: ReactEvent.Mouse.t => unit,
+  tabIndex: int,
+}
+
+type optionProps = {
+  data: Api.countryItem,
+  innerProps: optionInnerProps,
+}
 
 type components = {
   @as("DropdownIndicator")
@@ -58,6 +68,7 @@ external make: (
   ~placeholder: string,
   ~components: components=?,
   ~classNamePrefix: string,
+  ~escapeClearsValue: bool,
 ) => // ~styles: selectStylesRecord => unit=?,
 // ~tabSelectsValue={false}
 React.element = "default"

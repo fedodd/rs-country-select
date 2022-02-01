@@ -42,7 +42,7 @@ let components: ReactSelect.components = {
   dropdownIndicator: () => <SearchIconComponent />,
   indicatorSeparator: () => React.null,
   menuList: props => <CountrySelectMenu menuProps={props} height=164 itemSize=26 />,
-  option: ({data}) => <CountrySelectOption option={data} />,
+  option: ({data, innerProps}) => <CountrySelectOption option={data} innerProps={innerProps} />,
 }
 
 @react.component
@@ -115,6 +115,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
         classNamePrefix="--country-select"
         // styles={ReactSelect.mergeStyles(styles)}
         components
+        escapeClearsValue={true}
       />
     </DropDown>
 

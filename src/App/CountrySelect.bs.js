@@ -74,7 +74,8 @@ function components_MenuList(props) {
 
 function components_Option(param) {
   return React.createElement(CountrySelectOption.make, {
-              option: param.data
+              option: param.data,
+              innerProps: param.innerProps
             });
 }
 
@@ -158,7 +159,8 @@ function CountrySelect(Props) {
               menuIsOpen: menuIsOpen,
               placeholder: "Search",
               components: components,
-              classNamePrefix: "--country-select"
+              classNamePrefix: "--country-select",
+              escapeClearsValue: true
             }),
         isOpen: menuIsOpen,
         target: React.createElement(Button.make, {

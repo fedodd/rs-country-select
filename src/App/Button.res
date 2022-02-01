@@ -44,7 +44,7 @@ module Styles = {
 
 @react.component
 let make = (~text: string, ~onClick) =>
-  <div onClick className={Styles.button}>
+  <button onClick className={Styles.button}>
     <span className={Styles.buttonText}> {React.string(text)} </span>
     <ArrowIcon className={Styles.buttonIcon} />
-  </div>
+  </button>

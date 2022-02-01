@@ -18,8 +18,13 @@ module Styles = {
 }
 
 @react.component
-let make = (~option: Api.countryItem) => {
-  <div className={Styles.option}>
+let make = (~option: Api.countryItem, ~innerProps: ReactSelect.optionInnerProps) => {
+  <div
+    className={Styles.option}
+    id={innerProps.id}
+    onClick={innerProps.onClick}
+    onMouseOver={innerProps.onMouseOver}
+    tabIndex={innerProps.tabIndex}>
     <span className={`fi fi-${option.value} ${Styles.flag}`} />
     <span> {React.string(option.label)} </span>
   </div>

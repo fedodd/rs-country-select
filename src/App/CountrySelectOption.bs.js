@@ -26,8 +26,13 @@ var Styles = {
 
 function CountrySelectOption(Props) {
   var option$1 = Props.option;
+  var innerProps = Props.innerProps;
   return React.createElement("div", {
-              className: option
+              className: option,
+              id: innerProps.id,
+              tabIndex: innerProps.tabIndex,
+              onClick: innerProps.onClick,
+              onMouseOver: innerProps.onMouseOver
             }, React.createElement("span", {
                   className: "fi fi-" + option$1.value + " " + flag
                 }), React.createElement("span", undefined, option$1.label));
