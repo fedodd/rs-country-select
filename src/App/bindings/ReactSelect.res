@@ -59,10 +59,9 @@ external make: (
   ~filterOption: filterProps => unit=?,
   // ~getStyles: (string, _) => ReactDOM.style.t=?,
   // ~onFocus
-  // ~onKeyDown
+  ~onKeyDown: ReactEvent.Keyboard.t => unit,
   // ~backspaceRemovesValue={false}
   ~controlShouldRenderValue: bool,
-  // ~hideSelectedOptions={false}
   // ~isClearable={false}
   ~menuIsOpen: bool,
   ~placeholder: string,

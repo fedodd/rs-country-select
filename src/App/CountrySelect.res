@@ -86,10 +86,12 @@ let make = (~country: string, ~className: string, ~onChange) => {
     None
   })
 
-  // let filterOption = ReactSelect.createFilter({
-  //   ignoreAccents: false,
-  //   stringify: (option: ReactSelect.optionData) => option.data.label,
-  // })
+  let onKeyDown = (event: ReactEvent.Keyboard.t) => {
+    let key = ReactEvent.Keyboard.key(event)
+    if key === "Escape" {
+      onChange("")
+    }
+  }
 
   let selectWrapper =
     <DropDown
@@ -116,6 +118,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
         // styles={ReactSelect.mergeStyles(styles)}
         components
         escapeClearsValue={true}
+        onKeyDown
       />
     </DropDown>
 

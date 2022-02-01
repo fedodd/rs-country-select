@@ -148,6 +148,13 @@ function CountrySelect(Props) {
                 }));
           
         }), []);
+  var onKeyDown = function ($$event) {
+    var key = $$event.key;
+    if (key === "Escape") {
+      return Curry._1(onChange, "");
+    }
+    
+  };
   var selectWrapper = React.createElement(DropDown.make, {
         children: React.createElement(ReactSelect, {
               value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
@@ -155,6 +162,7 @@ function CountrySelect(Props) {
               options: options,
               onChange: onChangeHandler,
               autoFocus: true,
+              onKeyDown: onKeyDown,
               controlShouldRenderValue: false,
               menuIsOpen: menuIsOpen,
               placeholder: "Search",
