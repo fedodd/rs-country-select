@@ -21,12 +21,19 @@ module Row = {
 }
 
 @react.component
-let make = (~height: int, ~itemSize: int, ~menuProps: ReactSelect.menuListProps) => {
+let make = (
+  ~height: int,
+  ~itemSize: int,
+  ~menuProps: ReactSelect.menuListProps,
+  ~listRef: React.ref<Js.Nullable.t<ReactWindow.listRef>>,
+) => {
   <ReactWindow
     height
     itemSize
     itemCount={React.Children.toArray(menuProps.children)->Js.Array2.length}
-    className={Styles.list}>
+    className={Styles.list}
+    itemData={menuProps.focusedOption}
+    ref={listRef}>
     {({style, index}) =>
       <Row style index> {React.Children.toArray(menuProps.children)[index]} </Row>}
   </ReactWindow>

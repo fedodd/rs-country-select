@@ -5,6 +5,14 @@ type childrenFnProps = {
 
 type childrenFn = childrenFnProps => React.element
 
+type listRefProps = {itemData: Js.Nullable.t<Api.countryItem>}
+
+type listRef = {
+  scrollToItem: (. int, string) => unit,
+  scrollTo: (. int) => unit,
+  props: listRefProps,
+}
+
 @module("react-window") @react.component
 external make: (
   ~height: int,
@@ -12,4 +20,6 @@ external make: (
   ~itemCount: int,
   ~children: childrenFn,
   ~className: string=?,
+  ~itemData: Js.Nullable.t<Api.countryItem>,
+  ~ref: React.ref<Js.Nullable.t<listRef>>,
 ) => React.element = "FixedSizeList"

@@ -1,7 +1,7 @@
 type menuListProps = {
   options: array<Api.countryItem>,
   children: React.element,
-  focusedOption: Api.countryItem,
+  focusedOption: Js.Nullable.t<Api.countryItem>,
   maxHeight: int,
   innerRef: unit => React.element,
 }

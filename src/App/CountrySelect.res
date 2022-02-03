@@ -29,26 +29,31 @@ module SearchIconComponent = {
   let make = () => <div> <SearchIcon className={Styles.searchIcon} /> </div>
 }
 
-let components: ReactSelect.components = {
-  dropdownIndicator: () => <SearchIconComponent />,
-  indicatorSeparator: () => React.null,
-  menuList: props => <CountrySelectMenu menuProps={props} height=160 itemSize=26 />,
-  option: ({data, innerProps, isFocused, isSelected}) =>
-    <CountrySelectOption option={data} innerProps={innerProps} isFocused isSelected />,
+let getComponentsWithListRef = listRef => {
+  let components: ReactSelect.components = {
+    dropdownIndicator: () => <SearchIconComponent />,
+    indicatorSeparator: () => React.null,
+    menuList: props =>
+      <CountrySelectMenu menuProps={props} height=160 itemSize=26 listRef={listRef} />,
+    option: ({data, innerProps, isFocused, isSelected}) =>
+      <CountrySelectOption option={data} innerProps={innerProps} isFocused isSelected />,
+  }
+  components
 }
 
 @react.component
 let make = (~country: string, ~className: string, ~onChange) => {
+  let listRef = React.useRef(Js.Nullable.null)
+
+  let components = getComponentsWithListRef(listRef)
+
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
   let (menuIsOpen, setMenuIsOpen) = React.useState(_ => false)
   let (_, setError) = React.useState(_ => "")
 
   let onToggleHandler = (_event: ReactEvent.Mouse.t) => setMenuIsOpen(_ => !menuIsOpen)
 
-  // let defaultCountry
-
   let onChangeHandler = (country: Api.countryItem) => {
-    // setCurrentCountry(_ => country)
     onChange(country.value)
     setMenuIsOpen(_ => false)
   }
@@ -78,10 +83,23 @@ let make = (~country: string, ~className: string, ~onChange) => {
 
   let onKeyDown = (event: ReactEvent.Keyboard.t) => {
     let key = ReactEvent.Keyboard.key(event)
-    Js.log(event)
     if key === "Escape" {
       onChange("")
       setMenuIsOpen(_ => false)
+    }
+
+    if key === "ArrowUp" || key === "ArrowDown" {
+      switch Js.Nullable.toOption(listRef.current) {
+      | None => ()
+      | Some(listEl) =>
+        switch Js.Nullable.toOption(listEl.props.itemData) {
+        | None => ()
+        | Some(itemData) =>
+          let index = Js.Array2.findIndex(options, option => option.value === itemData.value)
+          let indexToScroll = key === "ArrowUp" ? index - 1 : index + 1
+          listEl.scrollToItem(. indexToScroll, "auto")
+        }
+      }
     }
   }
 
@@ -104,13 +122,11 @@ let make = (~country: string, ~className: string, ~onChange) => {
           defaultValue={"ru"}
           onChange={onChangeHandler}
           options
-          // getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
           placeholder="Search"
           menuIsOpen
           autoFocus={true}
           controlShouldRenderValue={false}
           classNamePrefix="--country-select"
-          // styles={ReactSelect.mergeStyles(styles)}
           components
           escapeClearsValue={true}
           onKeyDown

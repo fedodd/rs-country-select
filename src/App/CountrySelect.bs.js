@@ -55,42 +55,39 @@ var SearchIconComponent = {
   make: CountrySelect$SearchIconComponent
 };
 
-function components_DropdownIndicator(param) {
-  return React.createElement(CountrySelect$SearchIconComponent, {});
+function getComponentsWithListRef(listRef) {
+  return {
+          DropdownIndicator: (function (param) {
+              return React.createElement(CountrySelect$SearchIconComponent, {});
+            }),
+          IndicatorSeparator: (function (param) {
+              return null;
+            }),
+          MenuList: (function (props) {
+              return React.createElement(CountrySelectMenu.make, {
+                          height: 160,
+                          itemSize: 26,
+                          menuProps: props,
+                          listRef: listRef
+                        });
+            }),
+          Option: (function (param) {
+              return React.createElement(CountrySelectOption.make, {
+                          option: param.data,
+                          innerProps: param.innerProps,
+                          isFocused: param.isFocused,
+                          isSelected: param.isSelected
+                        });
+            })
+        };
 }
-
-function components_IndicatorSeparator(param) {
-  return null;
-}
-
-function components_MenuList(props) {
-  return React.createElement(CountrySelectMenu.make, {
-              height: 160,
-              itemSize: 26,
-              menuProps: props
-            });
-}
-
-function components_Option(param) {
-  return React.createElement(CountrySelectOption.make, {
-              option: param.data,
-              innerProps: param.innerProps,
-              isFocused: param.isFocused,
-              isSelected: param.isSelected
-            });
-}
-
-var components = {
-  DropdownIndicator: components_DropdownIndicator,
-  IndicatorSeparator: components_IndicatorSeparator,
-  MenuList: components_MenuList,
-  Option: components_Option
-};
 
 function CountrySelect(Props) {
   var country = Props.country;
   var className = Props.className;
   var onChange = Props.onChange;
+  var listRef = React.useRef(null);
+  var components = getComponentsWithListRef(listRef);
   var match = React.useState(function () {
         return [];
       });
@@ -151,14 +148,28 @@ function CountrySelect(Props) {
         }), []);
   var onKeyDown = function ($$event) {
     var key = $$event.key;
-    console.log($$event);
     if (key === "Escape") {
       Curry._1(onChange, "");
-      return Curry._1(setMenuIsOpen, (function (param) {
-                    return false;
-                  }));
+      Curry._1(setMenuIsOpen, (function (param) {
+              return false;
+            }));
     }
-    
+    if (!(key === "ArrowUp" || key === "ArrowDown")) {
+      return ;
+    }
+    var listEl = listRef.current;
+    if (listEl == null) {
+      return ;
+    }
+    var itemData = listEl.props.itemData;
+    if (itemData == null) {
+      return ;
+    }
+    var index = options.findIndex(function (option) {
+          return option.value === itemData.value;
+        });
+    var indexToScroll = key === "ArrowUp" ? index - 1 | 0 : index + 1 | 0;
+    return listEl.scrollToItem(indexToScroll, "auto");
   };
   return React.createElement("div", {
               className: className
@@ -192,7 +203,7 @@ export {
   SearchIcon ,
   Styles ,
   SearchIconComponent ,
-  components ,
+  getComponentsWithListRef ,
   make$1 as make,
   
 }

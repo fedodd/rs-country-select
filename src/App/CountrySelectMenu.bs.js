@@ -41,6 +41,7 @@ function CountrySelectMenu(Props) {
   var height = Props.height;
   var itemSize = Props.itemSize;
   var menuProps = Props.menuProps;
+  var listRef = Props.listRef;
   return React.createElement(ReactWindow.FixedSizeList, {
               height: height,
               itemSize: itemSize,
@@ -53,7 +54,9 @@ function CountrySelectMenu(Props) {
                               children: Caml_array.get(React.Children.toArray(menuProps.children), index)
                             });
                 }),
-              className: list
+              className: list,
+              itemData: menuProps.focusedOption,
+              ref: listRef
             });
 }
 
