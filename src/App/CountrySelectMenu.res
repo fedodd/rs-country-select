@@ -2,7 +2,6 @@ module Styles = {
   open Emotion
 
   let list = css({
-    "border": "1px solid #d9dddd",
     "&:hover": {
       "cursor": "pointer",
     },

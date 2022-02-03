@@ -35,7 +35,6 @@ var menu = {
 };
 
 var searchIcon = Css.css({
-      color: "grey",
       height: 13,
       width: 13
     });
@@ -66,7 +65,7 @@ function components_IndicatorSeparator(param) {
 
 function components_MenuList(props) {
   return React.createElement(CountrySelectMenu.make, {
-              height: 164,
+              height: 160,
               itemSize: 26,
               menuProps: props
             });

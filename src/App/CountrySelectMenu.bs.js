@@ -6,7 +6,6 @@ import * as Css from "@emotion/css";
 import * as ReactWindow from "react-window";
 
 var list = Css.css({
-      border: "1px solid #d9dddd",
       "&:hover": {
         cursor: "pointer"
       }

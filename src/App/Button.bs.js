@@ -16,14 +16,16 @@ var button = Css.css({
       gap: 5,
       justifyContent: "space-between",
       alignItems: "center",
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: 9,
+      paddingRight: 9,
       borderRadius: 2,
       border: "1px solid rgba(0, 0, 0, 0.2)",
       backgroundColor: "#ffffff",
       width: 119,
       height: 26,
       boxSizing: "border-box",
+      fontFamily: "inherit",
+      fontSize: "inherit",
       "&:hover": {
         cursor: "pointer"
       }

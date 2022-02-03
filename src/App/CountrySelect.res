@@ -15,7 +15,6 @@ module Styles = {
   let menu = {"boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.1)"}
 
   let searchIcon = css({
-    "color": "grey",
     "height": 13,
     "width": 13,
   })
@@ -30,18 +29,10 @@ module SearchIconComponent = {
   let make = () => <div> <SearchIcon className={Styles.searchIcon} /> </div>
 }
 
-// let props: ReactSelect.componentsProps = {
-//   options: array<Api.countryItem>,
-//   children: React.element,
-//   focusedOption: Api.countryItem,
-//   maxHeight: 164,
-//   innerRef: unit => React.element,
-// }
-
 let components: ReactSelect.components = {
   dropdownIndicator: () => <SearchIconComponent />,
   indicatorSeparator: () => React.null,
-  menuList: props => <CountrySelectMenu menuProps={props} height=164 itemSize=26 />,
+  menuList: props => <CountrySelectMenu menuProps={props} height=160 itemSize=26 />,
   option: ({data, innerProps, isFocused, isSelected}) =>
     <CountrySelectOption option={data} innerProps={innerProps} isFocused isSelected />,
 }
@@ -62,9 +53,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
     setMenuIsOpen(_ => false)
   }
 
-  // type convertFunc = string => ReactSelect.value
   let currentCountry = Js.Array2.find(options, option => option.value === country)
-  // let convertCountryToOption = (country: string) =>
 
   React.useEffect0(() => {
     let _ = {

@@ -10,7 +10,7 @@ var option = Css.css({
       height: "100%",
       color: "#333333",
       alignItems: "center",
-      paddingLeft: 10,
+      paddingLeft: 9,
       paddingRight: 16,
       "&:hover": {
         backgroundColor: "#eeeeee"
