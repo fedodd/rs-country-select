@@ -75,7 +75,9 @@ function components_MenuList(props) {
 function components_Option(param) {
   return React.createElement(CountrySelectOption.make, {
               option: param.data,
-              innerProps: param.innerProps
+              innerProps: param.innerProps,
+              isFocused: param.isFocused,
+              isSelected: param.isSelected
             });
 }
 
@@ -150,36 +152,39 @@ function CountrySelect(Props) {
         }), []);
   var onKeyDown = function ($$event) {
     var key = $$event.key;
+    console.log($$event);
     if (key === "Escape") {
-      return Curry._1(onChange, "");
+      Curry._1(onChange, "");
+      return Curry._1(setMenuIsOpen, (function (param) {
+                    return false;
+                  }));
     }
     
   };
-  var selectWrapper = React.createElement(DropDown.make, {
-        children: React.createElement(ReactSelect, {
-              value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
-              defaultValue: "ru",
-              options: options,
-              onChange: onChangeHandler,
-              autoFocus: true,
-              onKeyDown: onKeyDown,
-              controlShouldRenderValue: false,
-              menuIsOpen: menuIsOpen,
-              placeholder: "Search",
-              components: components,
-              classNamePrefix: "--country-select",
-              escapeClearsValue: true
-            }),
-        isOpen: menuIsOpen,
-        target: React.createElement(Button.make, {
-              text: currentCountry !== undefined ? currentCountry.label : "",
-              onClick: onToggleHandler
-            }),
-        onClose: onToggleHandler
-      });
   return React.createElement("div", {
               className: className
-            }, options.length > 0 ? selectWrapper : null);
+            }, options.length > 0 ? React.createElement(DropDown.make, {
+                    children: React.createElement(ReactSelect, {
+                          value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
+                          defaultValue: "ru",
+                          options: options,
+                          onChange: onChangeHandler,
+                          autoFocus: true,
+                          onKeyDown: onKeyDown,
+                          controlShouldRenderValue: false,
+                          menuIsOpen: menuIsOpen,
+                          placeholder: "Search",
+                          components: components,
+                          classNamePrefix: "--country-select",
+                          escapeClearsValue: true
+                        }),
+                    isOpen: menuIsOpen,
+                    target: React.createElement(Button.make, {
+                          text: currentCountry !== undefined ? currentCountry.label : "",
+                          onClick: onToggleHandler
+                        }),
+                    onClose: onToggleHandler
+                  }) : null);
 }
 
 var make$1 = CountrySelect;

@@ -42,7 +42,8 @@ let components: ReactSelect.components = {
   dropdownIndicator: () => <SearchIconComponent />,
   indicatorSeparator: () => React.null,
   menuList: props => <CountrySelectMenu menuProps={props} height=164 itemSize=26 />,
-  option: ({data, innerProps}) => <CountrySelectOption option={data} innerProps={innerProps} />,
+  option: ({data, innerProps, isFocused, isSelected}) =>
+    <CountrySelectOption option={data} innerProps={innerProps} isFocused isSelected />,
 }
 
 @react.component
@@ -88,44 +89,44 @@ let make = (~country: string, ~className: string, ~onChange) => {
 
   let onKeyDown = (event: ReactEvent.Keyboard.t) => {
     let key = ReactEvent.Keyboard.key(event)
+    Js.log(event)
     if key === "Escape" {
       onChange("")
+      setMenuIsOpen(_ => false)
     }
   }
 
-  let selectWrapper =
-    <DropDown
-      isOpen={menuIsOpen}
-      onClose={onToggleHandler}
-      target={<Button
-        text={switch currentCountry {
-        | Some(option) => option.label
-        | None => ""
-        }}
-        onClick={onToggleHandler}
-      />}>
-      <ReactSelect
-        value={currentCountry}
-        defaultValue={"ru"}
-        onChange={onChangeHandler}
-        options
-        // getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
-        placeholder="Search"
-        menuIsOpen
-        autoFocus={true}
-        controlShouldRenderValue={false}
-        classNamePrefix="--country-select"
-        // styles={ReactSelect.mergeStyles(styles)}
-        components
-        escapeClearsValue={true}
-        onKeyDown
-      />
-    </DropDown>
-
   <div className>
     {switch Js.Array2.length(options) > 0 {
-    | true => selectWrapper
     | false => React.null
+    | true =>
+      <DropDown
+        isOpen={menuIsOpen}
+        onClose={onToggleHandler}
+        target={<Button
+          text={switch currentCountry {
+          | Some(option) => option.label
+          | None => ""
+          }}
+          onClick={onToggleHandler}
+        />}>
+        <ReactSelect
+          value={currentCountry}
+          defaultValue={"ru"}
+          onChange={onChangeHandler}
+          options
+          // getOptionLabel={(option: Api.countryItem) => <OptionLabel option/>}
+          placeholder="Search"
+          menuIsOpen
+          autoFocus={true}
+          controlShouldRenderValue={false}
+          classNamePrefix="--country-select"
+          // styles={ReactSelect.mergeStyles(styles)}
+          components
+          escapeClearsValue={true}
+          onKeyDown
+        />
+      </DropDown>
     }}
   </div>
 }

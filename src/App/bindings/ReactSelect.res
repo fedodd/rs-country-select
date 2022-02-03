@@ -16,6 +16,8 @@ type optionInnerProps = {
 type optionProps = {
   data: Api.countryItem,
   innerProps: optionInnerProps,
+  isFocused: bool,
+  isSelected: bool,
 }
 
 type components = {

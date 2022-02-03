@@ -6,10 +6,23 @@ import * as Css from "@emotion/css";
 var option = Css.css({
       display: "flex",
       gap: "8px",
+      width: "100%",
+      height: "100%",
       color: "#333333",
       alignItems: "center",
       paddingLeft: 10,
-      paddingRight: 16
+      paddingRight: 16,
+      "&:hover": {
+        backgroundColor: "#eeeeee"
+      }
+    });
+
+var focused = Css.css({
+      backgroundColor: "#eeeeee"
+    });
+
+var selected = Css.css({
+      backgroundColor: "#dddddd"
     });
 
 var flag = Css.css({
@@ -21,14 +34,22 @@ var flag = Css.css({
 
 var Styles = {
   option: option,
+  focused: focused,
+  selected: selected,
   flag: flag
 };
 
 function CountrySelectOption(Props) {
   var option$1 = Props.option;
   var innerProps = Props.innerProps;
+  var isFocused = Props.isFocused;
+  var isSelected = Props.isSelected;
   return React.createElement("div", {
-              className: option,
+              className: option + " " + (
+                isFocused ? focused : ""
+              ) + " " + (
+                isSelected ? selected : ""
+              ),
               id: innerProps.id,
               tabIndex: innerProps.tabIndex,
               onClick: innerProps.onClick,

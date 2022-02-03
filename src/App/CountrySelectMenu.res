@@ -3,12 +3,15 @@ module Styles = {
 
   let list = css({
     "border": "1px solid #d9dddd",
+    "&:hover": {
+      "cursor": "pointer",
+    },
   })
 
   let listItem = css({
     "display": "flex",
     "alignItems": "center",
-    "justifyContent": "flexStart",
+    "justifyContent": "flex-start",
   })
 }
 

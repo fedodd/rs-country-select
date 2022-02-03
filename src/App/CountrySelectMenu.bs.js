@@ -6,13 +6,16 @@ import * as Css from "@emotion/css";
 import * as ReactWindow from "react-window";
 
 var list = Css.css({
-      border: "1px solid #d9dddd"
+      border: "1px solid #d9dddd",
+      "&:hover": {
+        cursor: "pointer"
+      }
     });
 
 var listItem = Css.css({
       display: "flex",
       alignItems: "center",
-      justifyContent: "flexStart"
+      justifyContent: "flex-start"
     });
 
 var Styles = {
