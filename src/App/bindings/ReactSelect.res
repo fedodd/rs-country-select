@@ -12,7 +12,6 @@ type menuListProps = {
 type optionInnerProps = {
   id: string,
   onClick: ReactEvent.Mouse.t => unit,
-  onMouseOver: ReactEvent.Mouse.t => unit,
   tabIndex: int,
 }
 
@@ -41,24 +40,18 @@ type filterProps = {
   stringify: optionData => string,
 }
 
-// here don't need to bind result, cause it is a function to set parameters, and only this parameters we set
-@module("react-select") external createFilter: filterProps => 'a = "createFilter"
-
 @module("react-select") @react.component
 external make: (
   ~value: option<Api.countryItem>,
   ~options: array<Api.countryItem>,
-  ~getOptionLabel: Api.countryItem => React.element=?,
   ~onChange: Api.countryItem => unit,
   ~autoFocus: bool,
-  ~openMenuOnFocus: bool=?,
-  ~filterOption: filterProps => unit=?,
   ~onKeyDown: ReactEvent.Keyboard.t => unit,
   ~controlShouldRenderValue: bool,
   ~menuIsOpen: bool,
   ~placeholder: string,
-  ~components: components=?,
+  ~components: components,
   ~classNamePrefix: string,
   ~escapeClearsValue: bool,
-  ~tabSelectsValue: bool=?,
+  ~tabSelectsValue: bool,
 ) => React.element = "default"

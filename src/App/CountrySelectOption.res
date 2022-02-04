@@ -49,7 +49,6 @@ let make = (
         : ""}`}
     id={innerProps.id}
     onClick={innerProps.onClick}
-    onMouseOver={innerProps.onMouseOver}
     tabIndex={innerProps.tabIndex}>
     <span className={`fi fi-${option.value} ${Styles.flag}`} />
     <span> {React.string(option.label)} </span>

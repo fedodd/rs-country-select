@@ -58,8 +58,7 @@ function CountrySelectOption(Props) {
               ),
               id: innerProps.id,
               tabIndex: innerProps.tabIndex,
-              onClick: innerProps.onClick,
-              onMouseOver: innerProps.onMouseOver
+              onClick: innerProps.onClick
             }, React.createElement("span", {
                   className: "fi fi-" + option$1.value + " " + flag
                 }), React.createElement("span", undefined, option$1.label));

@@ -6,12 +6,11 @@ import * as React from "react";
 import * as Button from "./Button.bs.js";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js";
 import * as DropDown from "./DropDown.bs.js";
+import * as SearchIcon from "./SearchIcon.bs.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
 import * as CountrySelectMenu from "./CountrySelectMenu.bs.js";
 import * as CountrySelectOption from "./CountrySelectOption.bs.js";
-import * as Search_iconSvg from "./assets/search_icon.svg";
 
 import 'flag-icons/css/flag-icons.min.css'
 ;
@@ -19,46 +18,10 @@ import 'flag-icons/css/flag-icons.min.css'
 import './styles/CountrySelect.scss'
 ;
 
-var make = Search_iconSvg.ReactComponent;
-
-var SearchIcon = {
-  make: make
-};
-
-var control = Css.css({
-      minWidth: "230",
-      margin: "8"
-    });
-
-var menu = {
-  boxShadow: "inset 0 1px 0 rgba(0, 0, 0, 0.1)"
-};
-
-var searchIcon = Css.css({
-      height: 13,
-      width: 13
-    });
-
-var Styles = {
-  control: control,
-  menu: menu,
-  searchIcon: searchIcon
-};
-
-function CountrySelect$SearchIconComponent(Props) {
-  return React.createElement("div", undefined, React.createElement(make, {
-                  className: searchIcon
-                }));
-}
-
-var SearchIconComponent = {
-  make: CountrySelect$SearchIconComponent
-};
-
 function getComponentsWithListRef(listRef) {
   return {
           DropdownIndicator: (function (param) {
-              return React.createElement(CountrySelect$SearchIconComponent, {});
+              return React.createElement(SearchIcon.make, {});
             }),
           IndicatorSeparator: (function (param) {
               return null;
@@ -87,6 +50,7 @@ function CountrySelect(Props) {
   var className = Props.className;
   var onChange = Props.onChange;
   var listRef = React.useRef(null);
+  var components = getComponentsWithListRef(listRef);
   var match = React.useState(function () {
         return [];
       });
@@ -115,7 +79,6 @@ function CountrySelect(Props) {
   var currentCountry = options.find(function (option) {
         return option.value === country;
       });
-  var components = getComponentsWithListRef(listRef);
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -165,50 +128,47 @@ function CountrySelect(Props) {
     if (itemData == null) {
       return ;
     }
-    var index = options.findIndex(function (option) {
+    var currentIndex = options.findIndex(function (option) {
           return option.value === itemData.value;
         });
     var indexToScroll = key === "ArrowUp" ? (
-        index === 0 ? options.length : index - 1 | 0
+        currentIndex === 0 ? options.length : currentIndex - 1 | 0
       ) : (
-        index === (options.length - 1 | 0) ? 0 : index + 1 | 0
+        currentIndex === (options.length - 1 | 0) ? 0 : currentIndex + 1 | 0
       );
     return listEl.scrollToItem(indexToScroll, "auto");
   };
   return React.createElement("div", {
               className: className
-            }, options.length > 0 ? React.createElement(DropDown.make, {
-                    children: React.createElement(ReactSelect, {
-                          value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
-                          options: options,
-                          onChange: onChangeHandler,
-                          autoFocus: true,
-                          onKeyDown: onKeyDown,
-                          controlShouldRenderValue: false,
-                          menuIsOpen: menuIsOpen,
-                          placeholder: "Search",
-                          components: components,
-                          classNamePrefix: "--country-select",
-                          escapeClearsValue: true,
-                          tabSelectsValue: true
-                        }),
-                    isOpen: menuIsOpen,
-                    target: React.createElement(Button.make, {
-                          text: currentCountry !== undefined ? currentCountry.label : "",
-                          onClick: onToggleHandler
-                        }),
-                    onClose: onToggleHandler
-                  }) : null);
+            }, React.createElement(DropDown.make, {
+                  children: React.createElement(ReactSelect, {
+                        value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
+                        options: options,
+                        onChange: onChangeHandler,
+                        autoFocus: true,
+                        onKeyDown: onKeyDown,
+                        controlShouldRenderValue: false,
+                        menuIsOpen: menuIsOpen,
+                        placeholder: "Search",
+                        components: components,
+                        classNamePrefix: "--country-select",
+                        escapeClearsValue: true,
+                        tabSelectsValue: true
+                      }),
+                  isOpen: menuIsOpen,
+                  target: React.createElement(Button.make, {
+                        text: currentCountry !== undefined ? currentCountry.label : "",
+                        onClick: onToggleHandler
+                      }),
+                  onClose: onToggleHandler
+                }));
 }
 
-var make$1 = CountrySelect;
+var make = CountrySelect;
 
 export {
-  SearchIcon ,
-  Styles ,
-  SearchIconComponent ,
   getComponentsWithListRef ,
-  make$1 as make,
+  make ,
   
 }
 /*  Not a pure module */

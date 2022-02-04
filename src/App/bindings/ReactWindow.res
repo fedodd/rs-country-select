@@ -9,7 +9,6 @@ type listRefProps = {itemData: Js.Nullable.t<Api.countryItem>}
 
 type listRef = {
   scrollToItem: (. int, string) => unit,
-  scrollTo: (. int) => unit,
   props: listRefProps,
 }
 
