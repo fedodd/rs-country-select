@@ -12,17 +12,23 @@ var option = Css.css({
       alignItems: "center",
       paddingLeft: 9,
       paddingRight: 16,
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
       "&:hover": {
-        backgroundColor: "#eeeeee"
+        backgroundColor: "#eeeeee",
+        whiteSpace: "normal"
       }
     });
 
 var focused = Css.css({
-      backgroundColor: "#eeeeee"
+      backgroundColor: "#eeeeee",
+      whiteSpace: "normal"
     });
 
 var selected = Css.css({
-      backgroundColor: "#dddddd"
+      backgroundColor: "#dddddd",
+      whiteSpace: "normal"
     });
 
 var flag = Css.css({

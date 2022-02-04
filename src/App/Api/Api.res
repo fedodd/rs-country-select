@@ -9,8 +9,6 @@ module Response = {
 }
 
 module Country = {
-  type t = {id: int, name: string}
-
   @val @scope("globalThis")
   external fetch: string => Promise.t<Response.t<Js.Nullable.t<array<countryItem>>>> = "fetch"
   @val @scope("globalThis")

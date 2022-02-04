@@ -45,8 +45,6 @@ let getComponentsWithListRef = listRef => {
 let make = (~country: string, ~className: string, ~onChange) => {
   let listRef = React.useRef(Js.Nullable.null)
 
-  let components = getComponentsWithListRef(listRef)
-
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
   let (menuIsOpen, setMenuIsOpen) = React.useState(_ => false)
   let (_, setError) = React.useState(_ => "")
@@ -59,6 +57,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
   }
 
   let currentCountry = Js.Array2.find(options, option => option.value === country)
+  let components = getComponentsWithListRef(listRef)
 
   React.useEffect0(() => {
     let _ = {
@@ -96,7 +95,10 @@ let make = (~country: string, ~className: string, ~onChange) => {
         | None => ()
         | Some(itemData) =>
           let index = Js.Array2.findIndex(options, option => option.value === itemData.value)
-          let indexToScroll = key === "ArrowUp" ? index - 1 : index + 1
+          let indexToScroll = switch key {
+          | "ArrowUp" => index === 0 ? Js.Array2.length(options) : index - 1
+          | _ => index === Js.Array2.length(options) - 1 ? 0 : index + 1
+          }
           listEl.scrollToItem(. indexToScroll, "auto")
         }
       }
@@ -119,7 +121,6 @@ let make = (~country: string, ~className: string, ~onChange) => {
         />}>
         <ReactSelect
           value={currentCountry}
-          defaultValue={"ru"}
           onChange={onChangeHandler}
           options
           placeholder="Search"
@@ -130,6 +131,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
           components
           escapeClearsValue={true}
           onKeyDown
+          tabSelectsValue={true}
         />
       </DropDown>
     }}

@@ -1,9 +1,12 @@
+type selectProps = {value: Js.Nullable.t<Api.countryItem>}
+
 type menuListProps = {
   options: array<Api.countryItem>,
   children: React.element,
   focusedOption: Js.Nullable.t<Api.countryItem>,
   maxHeight: int,
   innerRef: unit => React.element,
+  selectProps: selectProps,
 }
 
 type optionInnerProps = {
@@ -31,14 +34,6 @@ type components = {
   option: optionProps => React.element,
 }
 
-// innerProps:
-// DetailedHTMLProps Intersection<
-// ClassAttributes{...},
-// HTMLAttributes{...}
-// >
-
-// type customStyles = {"width": string}
-// type selectStylesRecord = {container: (unit, unit) => customStyles}
 type optionData = {data: Api.countryItem}
 
 type filterProps = {
@@ -52,24 +47,18 @@ type filterProps = {
 @module("react-select") @react.component
 external make: (
   ~value: option<Api.countryItem>,
-  ~defaultValue: string,
   ~options: array<Api.countryItem>,
   ~getOptionLabel: Api.countryItem => React.element=?,
   ~onChange: Api.countryItem => unit,
   ~autoFocus: bool,
   ~openMenuOnFocus: bool=?,
   ~filterOption: filterProps => unit=?,
-  // ~getStyles: (string, _) => ReactDOM.style.t=?,
-  // ~onFocus
   ~onKeyDown: ReactEvent.Keyboard.t => unit,
-  // ~backspaceRemovesValue={false}
   ~controlShouldRenderValue: bool,
-  // ~isClearable={false}
   ~menuIsOpen: bool,
   ~placeholder: string,
   ~components: components=?,
   ~classNamePrefix: string,
   ~escapeClearsValue: bool,
-) => // ~styles: selectStylesRecord => unit=?,
-// ~tabSelectsValue={false}
-React.element = "default"
+  ~tabSelectsValue: bool=?,
+) => React.element = "default"

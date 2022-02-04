@@ -9,17 +9,23 @@ module Styles = {
     "alignItems": "center",
     "paddingLeft": 9,
     "paddingRight": 16,
+    "textOverflow": "ellipsis",
+    "overflow": "hidden",
+    "whiteSpace": "nowrap",
     "&:hover": {
       "backgroundColor": "#eeeeee",
+      "whiteSpace": "normal",
     },
   })
 
   let focused = css({
     "backgroundColor": "#eeeeee",
+    "whiteSpace": "normal",
   })
 
   let selected = css({
     "backgroundColor": "#dddddd",
+    "whiteSpace": "normal",
   })
 
   let flag = css({

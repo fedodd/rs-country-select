@@ -87,7 +87,6 @@ function CountrySelect(Props) {
   var className = Props.className;
   var onChange = Props.onChange;
   var listRef = React.useRef(null);
-  var components = getComponentsWithListRef(listRef);
   var match = React.useState(function () {
         return [];
       });
@@ -116,6 +115,7 @@ function CountrySelect(Props) {
   var currentCountry = options.find(function (option) {
         return option.value === country;
       });
+  var components = getComponentsWithListRef(listRef);
   React.useEffect((function () {
           $$Promise.$$catch(Api.Country.getCountries(undefined).then(function (result) {
                     var tmp;
@@ -168,7 +168,11 @@ function CountrySelect(Props) {
     var index = options.findIndex(function (option) {
           return option.value === itemData.value;
         });
-    var indexToScroll = key === "ArrowUp" ? index - 1 | 0 : index + 1 | 0;
+    var indexToScroll = key === "ArrowUp" ? (
+        index === 0 ? options.length : index - 1 | 0
+      ) : (
+        index === (options.length - 1 | 0) ? 0 : index + 1 | 0
+      );
     return listEl.scrollToItem(indexToScroll, "auto");
   };
   return React.createElement("div", {
@@ -176,7 +180,6 @@ function CountrySelect(Props) {
             }, options.length > 0 ? React.createElement(DropDown.make, {
                     children: React.createElement(ReactSelect, {
                           value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
-                          defaultValue: "ru",
                           options: options,
                           onChange: onChangeHandler,
                           autoFocus: true,
@@ -186,7 +189,8 @@ function CountrySelect(Props) {
                           placeholder: "Search",
                           components: components,
                           classNamePrefix: "--country-select",
-                          escapeClearsValue: true
+                          escapeClearsValue: true,
+                          tabSelectsValue: true
                         }),
                     isOpen: menuIsOpen,
                     target: React.createElement(Button.make, {
