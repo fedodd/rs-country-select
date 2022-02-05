@@ -51,11 +51,11 @@ function CountrySelectOption(Props) {
   var isFocused = Props.isFocused;
   var isSelected = Props.isSelected;
   return React.createElement("div", {
-              className: option + " " + (
-                isFocused ? focused : ""
-              ) + " " + (
-                isSelected ? selected : ""
-              ),
+              className: Css.cx([
+                    option,
+                    isFocused ? focused : "",
+                    isSelected ? selected : ""
+                  ]),
               id: innerProps.id,
               tabIndex: innerProps.tabIndex,
               onClick: innerProps.onClick

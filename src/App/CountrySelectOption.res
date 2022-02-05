@@ -44,9 +44,11 @@ let make = (
   ~isSelected: bool,
 ) => {
   <div
-    className={`${Styles.option} ${isFocused ? Styles.focused : ""} ${isSelected
-        ? Styles.selected
-        : ""}`}
+    className={Emotion.cx([
+      Styles.option,
+      isFocused ? Styles.focused : "",
+      isSelected ? Styles.selected : "",
+    ])}
     id={innerProps.id}
     onClick={innerProps.onClick}
     tabIndex={innerProps.tabIndex}>

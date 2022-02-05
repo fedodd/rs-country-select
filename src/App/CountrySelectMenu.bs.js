@@ -24,10 +24,8 @@ var Styles = {
 
 function CountrySelectMenu$Row(Props) {
   var style = Props.style;
-  var index = Props.index;
   var children = Props.children;
   return React.createElement("div", {
-              key: index.toString(),
               className: listItem,
               style: style
             }, children);
@@ -42,16 +40,17 @@ function CountrySelectMenu(Props) {
   var itemSize = Props.itemSize;
   var menuProps = Props.menuProps;
   var listRef = Props.listRef;
+  var childrenArray = React.Children.toArray(menuProps.children);
   return React.createElement(ReactWindow.FixedSizeList, {
               height: height,
               itemSize: itemSize,
-              itemCount: React.Children.toArray(menuProps.children).length,
+              itemCount: childrenArray.length,
               children: (function (param) {
                   var index = param.index;
                   return React.createElement(CountrySelectMenu$Row, {
                               style: param.style,
-                              index: index,
-                              children: Caml_array.get(React.Children.toArray(menuProps.children), index)
+                              children: Caml_array.get(childrenArray, index),
+                              key: index.toString()
                             });
                 }),
               className: list,

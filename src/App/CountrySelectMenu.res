@@ -16,8 +16,8 @@ module Styles = {
 
 module Row = {
   @react.component
-  let make = (~style: ReactDOM.style, ~index: int, ~children: React.element) =>
-    <div style={style} key={Js.Int.toString(index)} className={Styles.listItem}> children </div>
+  let make = (~style: ReactDOM.style, ~children: React.element) =>
+    <div style={style} className={Styles.listItem}> children </div>
 }
 
 @react.component
@@ -27,14 +27,14 @@ let make = (
   ~menuProps: ReactSelect.menuListProps,
   ~listRef: React.ref<Js.Nullable.t<ReactWindow.listRef>>,
 ) => {
+  let childrenArray = React.Children.toArray(menuProps.children)
   <ReactWindow
     height
     itemSize
-    itemCount={React.Children.toArray(menuProps.children)->Js.Array2.length}
+    itemCount={Js.Array2.length(childrenArray)}
     className={Styles.list}
     itemData={menuProps.focusedOption}
     ref={listRef}>
-    {({style, index}) =>
-      <Row style index> {React.Children.toArray(menuProps.children)[index]} </Row>}
+    {({style, index}) => <Row style key={Js.Int.toString(index)}> {childrenArray[index]} </Row>}
   </ReactWindow>
 }
