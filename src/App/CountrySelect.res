@@ -1,6 +1,10 @@
 %%raw("import 'flag-icons/css/flag-icons.min.css'")
 %%raw("import './styles/CountrySelect.scss'")
 
+let errorStyle = Emotion.css({
+  "color": "red",
+})
+
 let getComponentsWithListRef = listRef => {
   let components: ReactSelect.components = {
     dropdownIndicator: () => <SearchIcon />,
@@ -20,7 +24,8 @@ let make = (~country: string, ~className: string, ~onChange) => {
 
   let (options: array<Api.countryItem>, setOptions) = React.useState(_ => [])
   let (menuIsOpen, setMenuIsOpen) = React.useState(_ => false)
-  let (_, setError) = React.useState(_ => "")
+  let (error: string, setError) = React.useState(_ => "")
+  let (isError: bool, setIsError) = React.useState(_ => false)
 
   let onToggleHandler = (_event: ReactEvent.Mouse.t) => setMenuIsOpen(_ => !menuIsOpen)
 
@@ -38,7 +43,10 @@ let make = (~country: string, ~className: string, ~onChange) => {
       ->Promise.then(result => {
         switch result {
         | Ok(countries) => setOptions(_prev => countries)
-        | Error(msg) => setError(_prev => "Could not query countries: " ++ msg)
+        | Error(msg) => {
+            setIsError(_prev => true)
+            setError(_prev => "Could not query countries: " ++ msg)
+          }
         }->resolve
       })
       ->catch(e => {
@@ -67,7 +75,7 @@ let make = (~country: string, ~className: string, ~onChange) => {
         | None => ()
         | Some(itemData) =>
           let currentIndex = Js.Array2.findIndex(options, option => option.value === itemData.value)
-          // fix scroll on move from start to end of a list, and backward
+          // scroll on move from start to end of a list, and backward
           let indexToScroll = switch key {
           | "ArrowUp" => currentIndex === 0 ? Js.Array2.length(options) : currentIndex - 1
           | _ => currentIndex === Js.Array2.length(options) - 1 ? 0 : currentIndex + 1
@@ -89,20 +97,24 @@ let make = (~country: string, ~className: string, ~onChange) => {
         }}
         onClick={onToggleHandler}
       />}>
-      <ReactSelect
-        value={currentCountry}
-        onChange={onChangeHandler}
-        options
-        placeholder="Search"
-        menuIsOpen
-        autoFocus={true}
-        controlShouldRenderValue={false}
-        classNamePrefix="--country-select"
-        components
-        escapeClearsValue={true}
-        onKeyDown
-        tabSelectsValue={true}
-      />
+      {switch isError {
+      | true => <span className={errorStyle}> {React.string(error)} </span>
+      | false =>
+        <ReactSelect
+          value={currentCountry}
+          onChange={onChangeHandler}
+          options
+          placeholder="Search"
+          menuIsOpen
+          autoFocus={true}
+          controlShouldRenderValue={false}
+          classNamePrefix="--country-select"
+          components
+          escapeClearsValue={true}
+          onKeyDown
+          tabSelectsValue={true}
+        />
+      }}
     </DropDown>
   </div>
 }

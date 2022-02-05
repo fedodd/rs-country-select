@@ -8,6 +8,7 @@ import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.bs.js";
 import * as DropDown from "./DropDown.bs.js";
 import * as SearchIcon from "./SearchIcon.bs.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as Css from "@emotion/css";
 import ReactSelect from "react-select";
 import * as CountrySelectMenu from "./CountrySelectMenu.bs.js";
 import * as CountrySelectOption from "./CountrySelectOption.bs.js";
@@ -17,6 +18,10 @@ import 'flag-icons/css/flag-icons.min.css'
 
 import './styles/CountrySelect.scss'
 ;
+
+var errorStyle = Css.css({
+      color: "red"
+    });
 
 function getComponentsWithListRef(listRef) {
   return {
@@ -65,6 +70,10 @@ function CountrySelect(Props) {
         return "";
       });
   var setError = match$2[1];
+  var match$3 = React.useState(function () {
+        return false;
+      });
+  var setIsError = match$3[1];
   var onToggleHandler = function (_event) {
     return Curry._1(setMenuIsOpen, (function (param) {
                   return !menuIsOpen;
@@ -89,6 +98,9 @@ function CountrySelect(Props) {
                             }));
                     } else {
                       var msg = result._0;
+                      Curry._1(setIsError, (function (_prev) {
+                              return true;
+                            }));
                       tmp = Curry._1(setError, (function (_prev) {
                               return "Could not query countries: " + msg;
                             }));
@@ -141,20 +153,22 @@ function CountrySelect(Props) {
   return React.createElement("div", {
               className: className
             }, React.createElement(DropDown.make, {
-                  children: React.createElement(ReactSelect, {
-                        value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
-                        options: options,
-                        onChange: onChangeHandler,
-                        autoFocus: true,
-                        onKeyDown: onKeyDown,
-                        controlShouldRenderValue: false,
-                        menuIsOpen: menuIsOpen,
-                        placeholder: "Search",
-                        components: components,
-                        classNamePrefix: "--country-select",
-                        escapeClearsValue: true,
-                        tabSelectsValue: true
-                      }),
+                  children: match$3[0] ? React.createElement("span", {
+                          className: errorStyle
+                        }, match$2[0]) : React.createElement(ReactSelect, {
+                          value: currentCountry === undefined ? undefined : Caml_option.some(currentCountry),
+                          options: options,
+                          onChange: onChangeHandler,
+                          autoFocus: true,
+                          onKeyDown: onKeyDown,
+                          controlShouldRenderValue: false,
+                          menuIsOpen: menuIsOpen,
+                          placeholder: "Search",
+                          components: components,
+                          classNamePrefix: "--country-select",
+                          escapeClearsValue: true,
+                          tabSelectsValue: true
+                        }),
                   isOpen: menuIsOpen,
                   target: React.createElement(Button.make, {
                         text: currentCountry !== undefined ? currentCountry.label : "",
@@ -167,6 +181,7 @@ function CountrySelect(Props) {
 var make = CountrySelect;
 
 export {
+  errorStyle ,
   getComponentsWithListRef ,
   make ,
   
