@@ -93,15 +93,15 @@ function CountrySelect(Props) {
                     var tmp;
                     if (result.TAG === /* Ok */0) {
                       var countries = result._0;
-                      tmp = Curry._1(setOptions, (function (_prev) {
+                      tmp = Curry._1(setOptions, (function (param) {
                               return countries;
                             }));
                     } else {
                       var msg = result._0;
-                      Curry._1(setIsError, (function (_prev) {
+                      Curry._1(setIsError, (function (param) {
                               return true;
                             }));
-                      tmp = Curry._1(setError, (function (_prev) {
+                      tmp = Curry._1(setError, (function (param) {
                               return "Could not query countries: " + msg;
                             }));
                     }
@@ -109,11 +109,11 @@ function CountrySelect(Props) {
                   }), (function (e) {
                   if (e.RE_EXN_ID === Api.FailedRequest) {
                     var msg = e._1;
-                    Curry._1(setError, (function (_prev) {
+                    Curry._1(setError, (function (param) {
                             return "Operation failed! " + msg;
                           }));
                   } else {
-                    Curry._1(setError, (function (_prev) {
+                    Curry._1(setError, (function (param) {
                             return "Unknown error";
                           }));
                   }

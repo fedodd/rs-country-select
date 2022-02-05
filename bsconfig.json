@@ -11,11 +11,7 @@
   },
   "suffix": ".bs.js",
   "reason": { "react-jsx": 3 },
-  "bs-dependencies": [
-    "@rescript/react",
-    "bs-fetch",
-    "@ryyppy/rescript-promise"
-  ],
+  "bs-dependencies": ["@rescript/react", "@ryyppy/rescript-promise"],
   "warnings": {
     "error": "+101"
   },

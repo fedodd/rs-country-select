@@ -42,17 +42,17 @@ let make = (~country: string, ~className: string, ~onChange) => {
       Api.Country.getCountries()
       ->Promise.then(result => {
         switch result {
-        | Ok(countries) => setOptions(_prev => countries)
+        | Ok(countries) => setOptions(_ => countries)
         | Error(msg) => {
-            setIsError(_prev => true)
-            setError(_prev => "Could not query countries: " ++ msg)
+            setIsError(_ => true)
+            setError(_ => "Could not query countries: " ++ msg)
           }
         }->resolve
       })
       ->catch(e => {
         switch e {
-        | Api.FailedRequest(msg) => setError(_prev => "Operation failed! " ++ msg)
-        | _ => setError(_prev => "Unknown error")
+        | Api.FailedRequest(msg) => setError(_ => "Operation failed! " ++ msg)
+        | _ => setError(_ => "Unknown error")
         }
         resolve()
       })
