@@ -27,7 +27,6 @@ module Styles = {
   })
 
   let buttonText = css({
-    "display": "flex",
     "background": "inherit",
     "whiteSpace": "nowrap",
     "textOverflow": "ellipsis",

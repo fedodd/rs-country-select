@@ -32,7 +32,6 @@ var button = Css.css({
     });
 
 var buttonText = Css.css({
-      display: "flex",
       background: "inherit",
       whiteSpace: "nowrap",
       textOverflow: "ellipsis",

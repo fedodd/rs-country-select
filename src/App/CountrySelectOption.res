@@ -9,6 +9,7 @@ module Styles = {
     "alignItems": "center",
     "paddingLeft": 9,
     "paddingRight": 16,
+    "lineHeight": 1,
     "textOverflow": "ellipsis",
     "overflow": "hidden",
     "whiteSpace": "nowrap",
@@ -32,6 +33,7 @@ module Styles = {
     ".fi&": {
       "width": "14px",
       "height": "10px",
+      "flexShrink": "0",
     },
   })
 }

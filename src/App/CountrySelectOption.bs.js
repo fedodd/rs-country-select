@@ -12,6 +12,7 @@ var option = Css.css({
       alignItems: "center",
       paddingLeft: 9,
       paddingRight: 16,
+      lineHeight: 1,
       textOverflow: "ellipsis",
       overflow: "hidden",
       whiteSpace: "nowrap",
@@ -34,7 +35,8 @@ var selected = Css.css({
 var flag = Css.css({
       ".fi&": {
         width: "14px",
-        height: "10px"
+        height: "10px",
+        flexShrink: "0"
       }
     });
 
