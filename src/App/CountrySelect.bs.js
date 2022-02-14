@@ -150,6 +150,16 @@ function CountrySelect(Props) {
       );
     return listEl.scrollToItem(indexToScroll, "auto");
   };
+  React.useEffect((function () {
+          var listEl = listRef.current;
+          if (!(listEl == null) && menuIsOpen) {
+            var currentIndex = options.findIndex(function (option) {
+                  return option.value === country;
+                });
+            listEl.scrollToItem(currentIndex, "smart");
+          }
+          
+        }), [menuIsOpen]);
   return React.createElement("div", {
               className: className
             }, React.createElement(DropDown.make, {
