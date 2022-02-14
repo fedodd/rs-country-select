@@ -86,17 +86,17 @@ let make = (~country: string, ~className: string, ~onChange) => {
     }
   }
 
-  React.useEffect1(() => {
-    switch Js.Nullable.toOption(listRef.current) {
-    | None => ()
-    | Some(listEl) =>
-      if menuIsOpen {
-        let currentIndex = Js.Array2.findIndex(options, option => option.value === country)
-        listEl.scrollToItem(. currentIndex, "smart")
-      }
-    }
-    None
-  }, [menuIsOpen])
+  // React.useEffect1(() => {
+  //   switch Js.Nullable.toOption(listRef.current) {
+  //   | None => ()
+  //   | Some(listEl) =>
+  //     if menuIsOpen {
+  //       let currentIndex = Js.Array2.findIndex(options, option => option.value === country)
+  //       listEl.scrollToItem(. currentIndex, "smart")
+  //     }
+  //   }
+  //   None
+  // }, [menuIsOpen])
 
   <div className>
     <DropDown

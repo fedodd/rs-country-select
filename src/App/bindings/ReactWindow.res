@@ -21,4 +21,5 @@ external make: (
   ~className: string=?,
   ~itemData: Js.Nullable.t<Api.countryItem>,
   ~ref: React.ref<Js.Nullable.t<listRef>>,
+  ~initialScrollOffset: int,
 ) => React.element = "FixedSizeList"

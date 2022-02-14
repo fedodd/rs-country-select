@@ -7,6 +7,8 @@ type menuListProps = {
   maxHeight: int,
   innerRef: unit => React.element,
   selectProps: selectProps,
+  value: Js.Nullable.t<Api.countryItem>,
+  getValue: unit => Js.Nullable.t<array<Api.countryItem>>,
 }
 
 type optionInnerProps = {

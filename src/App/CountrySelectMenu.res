@@ -28,13 +28,28 @@ let make = (
   ~listRef: React.ref<Js.Nullable.t<ReactWindow.listRef>>,
 ) => {
   let childrenArray = React.Children.toArray(menuProps.children)
+
+  let value = menuProps.getValue()
   <ReactWindow
     height
     itemSize
     itemCount={Js.Array2.length(childrenArray)}
     className={Styles.list}
     itemData={menuProps.focusedOption}
-    ref={listRef}>
+    ref={listRef}
+    initialScrollOffset={switch Js.Nullable.toOption(value) {
+    | Some(targetOption) => {
+        Js.log(targetOption)
+        let index = Js.Array2.findIndex(menuProps.options, option =>
+          option.value === targetOption[0].value
+        )
+        switch index {
+        | 0 => 0
+        | value => value * 26
+        }
+      }
+    | None => 0
+    }}>
     {({style, index}) => <Row style key={Js.Int.toString(index)}> {childrenArray[index]} </Row>}
   </ReactWindow>
 }
